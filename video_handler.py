@@ -56,9 +56,10 @@ def get_video_for_web(ip_addr, quality):
     while True:
         ret, frame = cap.read()
         if not ret:
+            print(f'No frame for {ip_addr}')
             continue
         ret, encoded_frame = cv2.imencode(".jpg", frame)
         if not ret:
+            print(f'No encoded frame for {ip_addr}')
             continue
-        yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' +
-               bytearray(encoded_frame) + b'\r\n')
+        yield b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encoded_frame) + b'\r\n'
