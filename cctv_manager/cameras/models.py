@@ -10,7 +10,7 @@ def configuration_default():
 
 
 class Camera(models.Model):
-    name = models.CharField(verbose_name='Имя камеры')
+    name = models.CharField(verbose_name='Имя камеры', max_length=20)
     configuration = models.JSONField(verbose_name='Конфигурация камеры', default=configuration_default)
 
     class Meta:
