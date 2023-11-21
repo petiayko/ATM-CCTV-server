@@ -1,0 +1,6 @@
+{% extends 'base/list.html' %}
+
+{% block page_title %}CCTV manager | Трансляция{% endblock %}
+
+{% block empty_mess %}<h2>В системе нет зарегистрированных камер. Перейдите на <a href="{% url 'cameras_list' %}">страницу</a>
+    добавления.</h2>{% endblock %}

@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from django_tables2 import SingleTableView
 
-# Create your views here.
+from . import models
+
+
+class CamerasListView(SingleTableView):
+    model = models.Camera
+    template_name = 'cameras/list.html'
+    table_class = ''

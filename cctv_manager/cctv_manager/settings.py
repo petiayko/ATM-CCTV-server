@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_tables2',
     'accounts.apps.AccountsConfig',
     'cameras.apps.CamerasConfig',
     'design.apps.DesignConfig',
@@ -59,7 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'cctv_manager.middlewares.AuthRequiredMiddleware'
+    'cctv_manager.middlewares.AuthRequiredMiddleware',
 ]
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -91,8 +92,7 @@ WSGI_APPLICATION = 'cctv_manager.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': '/data/config/cctv_manager/db.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': '/data/config/cctv_manager/db.sqlite3',
     }
 }
 
@@ -136,5 +136,6 @@ STATICFILES_DIRS = []
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGIN_REDIRECT_URL = 'login'
+LOGIN_REDIRECT_URL = 'live_stream'
+LOGOUT_REDIRECT_URL = 'login'
 OPEN_URLS = ['logout']
