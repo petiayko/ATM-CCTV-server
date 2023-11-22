@@ -3,8 +3,8 @@
 {% block page_title %}CCTV manager | Камеры{% endblock %}
 
 {% block add_button %}
-    <div class="d-flex">
-        <a href="#" class="btn btn-primary">Добавить камеру</a>
+    <div class="mb-3 mr-3 d-flex">
+        <a href="{% url 'camera_add' %}" class="btn btn-primary">Добавить камеру</a>
     </div>
 {% endblock %}
 {% block empty_mess %}<h2>В системе нет зарегистрированных камер.</h2>{% endblock %}

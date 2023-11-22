@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap5',
     'django_tables2',
     'accounts.apps.AccountsConfig',
     'cameras.apps.CamerasConfig',

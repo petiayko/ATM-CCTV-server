@@ -1,10 +1,9 @@
-from django.contrib.auth import logout, login
-from django.contrib.auth.views import LoginView
-from django.shortcuts import render, redirect
+from django.contrib.auth import logout
+from django.shortcuts import redirect, render
 
 
-class LoginUserView(LoginView):
-    pass
+def information(request):
+    return render(request, 'base/information.html')
 
 
 def logout_user(request):

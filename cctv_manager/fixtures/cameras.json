@@ -1,0 +1,178 @@
+[
+  {
+    "model": "cameras.camera",
+    "pk": 1,
+    "fields": {
+      "name": "Камера 1",
+      "ip_address": "192.168.0.50",
+      "prerecord_time_sec": 0,
+      "postrecord_time_sec": 0,
+      "video_length_min": 1
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 2,
+    "fields": {
+      "name": "Камера 2",
+      "ip_address": "192.168.0.51",
+      "prerecord_time_sec": 1,
+      "postrecord_time_sec": 4,
+      "video_length_min": 8
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 3,
+    "fields": {
+      "name": "Камера 3",
+      "ip_address": "192.168.0.52",
+      "prerecord_time_sec": 0,
+      "postrecord_time_sec": 0,
+      "video_length_min": 1
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 4,
+    "fields": {
+      "name": "Камера 4",
+      "ip_address": "192.168.0.53",
+      "prerecord_time_sec": 1,
+      "postrecord_time_sec": 4,
+      "video_length_min": 8
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 5,
+    "fields": {
+      "name": "Камера камера камера камера камера камера камера камера камера камера камера",
+      "ip_address": "192.168.0.54",
+      "prerecord_time_sec": 0,
+      "postrecord_time_sec": 0,
+      "video_length_min": 1
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 6,
+    "fields": {
+      "name": "Камера 5",
+      "ip_address": "192.168.0.55",
+      "prerecord_time_sec": 1,
+      "postrecord_time_sec": 4,
+      "video_length_min": 8
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 7,
+    "fields": {
+      "name": "Камера 6",
+      "ip_address": "192.168.0.56",
+      "prerecord_time_sec": 0,
+      "postrecord_time_sec": 0,
+      "video_length_min": 1
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 8,
+    "fields": {
+      "name": "Камера 7",
+      "ip_address": "192.168.0.57",
+      "prerecord_time_sec": 1,
+      "postrecord_time_sec": 4,
+      "video_length_min": 8
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 9,
+    "fields": {
+      "name": "Камера 8",
+      "ip_address": "192.168.0.58",
+      "prerecord_time_sec": 0,
+      "postrecord_time_sec": 0,
+      "video_length_min": 1
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 10,
+    "fields": {
+      "name": "Камера 9",
+      "ip_address": "192.168.0.59",
+      "prerecord_time_sec": 1,
+      "postrecord_time_sec": 4,
+      "video_length_min": 8
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 11,
+    "fields": {
+      "name": "Камера 10",
+      "ip_address": "192.168.0.60",
+      "prerecord_time_sec": 0,
+      "postrecord_time_sec": 0,
+      "video_length_min": 1
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 12,
+    "fields": {
+      "name": "Камера 11",
+      "ip_address": "192.168.0.61",
+      "prerecord_time_sec": 1,
+      "postrecord_time_sec": 4,
+      "video_length_min": 8
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 13,
+    "fields": {
+      "name": "Камера 12",
+      "ip_address": "192.168.0.62",
+      "prerecord_time_sec": 0,
+      "postrecord_time_sec": 0,
+      "video_length_min": 1
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 14,
+    "fields": {
+      "name": "Камера 13",
+      "ip_address": "192.168.0.63",
+      "prerecord_time_sec": 1,
+      "postrecord_time_sec": 4,
+      "video_length_min": 8
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 15,
+    "fields": {
+      "name": "Камера 14",
+      "ip_address": "192.168.0.64",
+      "prerecord_time_sec": 0,
+      "postrecord_time_sec": 0,
+      "video_length_min": 1
+    }
+  },
+  {
+    "model": "cameras.camera",
+    "pk": 16,
+    "fields": {
+      "name": "Камера 15",
+      "ip_address": "192.168.0.65",
+      "prerecord_time_sec": 1,
+      "postrecord_time_sec": 4,
+      "video_length_min": 8
+    }
+  }
+]
