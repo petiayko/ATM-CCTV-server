@@ -14,19 +14,11 @@
     {% endfor %}
     <tr>
         <th scope="row" class="w-25">Статус</th>
-        {% if not status %}
-            <td>
-                <div class="d-flex justify-content-between">
-                    <strong style="color: red;">Недоступна</strong>
-                </div>
-            </td>
-        {% else %}
-            <td>
-                <div class="d-flex justify-content-between">
-                    <strong style="color: green;">Доступна</strong>
-                </div>
-            </td>
-        {% endif %}
+        <td>
+            <div class="d-flex justify-content-between">
+                <strong id="status-camera-id">Определяется...</strong>
+            </div>
+        </td>
     </tr>
 {% endblock %}
 {% block detail_additional %}
@@ -72,4 +64,22 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block additional_js %}
+<script>
+    $.ajax({
+        url: '{% url "camera_ping" object.id %}',
+        method: 'get',
+        success: function(data) {
+            if (data.success) {
+                $('#status-camera-id').parent().html('<strong style="color: green">Доступна</strong>')
+            } else {
+                $('#status-camera-id').parent().html('<strong style="color: red">Недоступна</strong>')
+            }
+        },
+        error: function(data) {
+            $('#status-camera-id').parent().html('<strong style="color: red">Не удалось определить</strong>')
+        }
+    })
+</script>
 {% endblock %}

@@ -8,3 +8,26 @@
     </div>
 {% endblock %}
 {% block empty_mess %}<h2>В системе нет зарегистрированных камер.</h2>{% endblock %}
+{% block additional_js %}
+<script>
+    $(function() {
+        $('tbody tr').each(function() {
+            let camera_id = $(this).attr('camera-id');
+            $.ajax({
+                url: '/cameras/' + camera_id + '/ping',
+                method: 'get',
+                success: function(data) {
+                    if (data.success) {
+                        $('#id-status-' + camera_id).parent().html('<strong style="color: green">Доступна</strong>')
+                    } else {
+                        $('#id-status-' + camera_id).parent().html('<strong style="color: red">Недоступна</strong>')
+                    }
+                },
+                error: function(data) {
+                    $('#status-camera-id').parent().html('<strong style="color: red">Не удалось определить</strong>')
+                }
+            })
+        })
+    })
+</script>
+{% endblock %}

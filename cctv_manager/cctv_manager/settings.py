@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+import platform
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -93,7 +94,8 @@ WSGI_APPLICATION = 'cctv_manager.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/data/config/cctv_manager/db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3' if platform.system().lower() == 'windows' else '/data/config'
+                                                                                       '/cctv_manager/db.sqlite3'
     }
 }
 

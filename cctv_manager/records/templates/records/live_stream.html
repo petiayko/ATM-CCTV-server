@@ -12,13 +12,13 @@
                 <div class="container">
                     {% for camera1, camera2 in cameras %}
                     <div class="row">
-                        <div class="col" id="camera-id-{{camera1.id}}">
+                        <div class="col" camera-id="{{camera1.id}}">
                             <div class="mb-3" id="camera-name-id-{{camera1.id}}">
                                 <a href="{% url 'camera_detail' camera1.id %}">{{ camera1.name }}</a>
                                 ({{ camera1.ip_address }}) - <strong style="color: red;">Недоступна</strong>
                             </div>
                             {% if 2 == 1 %}
-                            <img src="{% url 'video_stream' camera1.id %}">
+                            <img src="{% static 'images/temp.jpg' %}">
                             <button class="btn btn-primary mt-3" style="display: flex;">Начать запись</button>
                             {% else %}
                             <p>Не удалось получить изображение с камеры. Убедитесь, что устройство в рабочем состоянии,
@@ -28,13 +28,13 @@
                         {% if camera2 == None %}
                         <div class="col" id="camera-empty"></div>
                         {% else %}
-                        <div class="col" id="camera-id-{{camera2.id}}">
+                        <div class="col" camera-id="{{camera2.id}}">
                             <div class="mb-3" id="camera-name-id-{{camera2.id}}">
                                 <a href="{% url 'camera_detail' camera2.id %}">{{ camera2.name }}</a>
                                 ({{ camera2.ip_address }}) - <strong style="color: green;">Доступна</strong>
                             </div>
                             {% if 1 == 1 %}
-                            <img src="{% url 'video_stream' camera2.id %}">
+                            <img src="{% static 'images/temp.jpg' %}">
                             <button class="btn btn-primary mt-3" style="display: flex;">Начать запись</button>
                             {% else %}
                             <p>Не удалось получить изображение с камеры. Убедитесь, что устройство в рабочем состоянии,
@@ -56,3 +56,26 @@
     </div>
 </div>
 {% endblock content %}
+{% block additional_js %}
+<script>
+    $(function() {
+        $('tbody tr').each(function() {
+            let camera_id = $(this).attr('camera-id');
+            $.ajax({
+                url: '/cameras/' + camera_id + '/ping',
+                method: 'get',
+                success: function(data) {
+                    if (data.success) {
+                        $('#id-status-' + camera_id).parent().html('<strong style="color: green">Доступна</strong>')
+                    } else {
+                        $('#id-status-' + camera_id).parent().html('<strong style="color: red">Недоступна</strong>')
+                    }
+                },
+                error: function(data) {
+                    $('#status-camera-id').parent().html('<strong style="color: red">Не удалось определить</strong>')
+                }
+            })
+        })
+    })
+</script>
+{% endblock %}

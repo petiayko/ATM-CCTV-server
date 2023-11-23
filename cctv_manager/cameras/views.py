@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView
 from django_tables2 import SingleTableView
@@ -27,7 +27,7 @@ class CameraDetailView(DetailView):
         camera = self.object
         context.update({
             'fields': camera.get_fields().items(),
-            'status': check_ping(camera.ip_address),
+            # 'status': check_ping(camera.ip_address),
         })
         return context
 
@@ -54,3 +54,10 @@ def camera_delete(request, pk):
     camera = get_object_or_404(models.Camera, pk=pk)
     camera.delete()
     return HttpResponseRedirect(reverse_lazy('cameras_list'))
+
+
+def ping_camera(request, pk):
+    camera = get_object_or_404(models.Camera, pk=pk)
+    if check_ping(camera.ip_address):
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False})

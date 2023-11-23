@@ -13,16 +13,9 @@ class CamerasTable(tables.Table):
     detail = tables.TemplateColumn(template_name='cameras/camera_detail.html', verbose_name='', orderable=False)
 
     def render_status(self, record):
-        def get_html_status(colour, status):
-            return format_html(
-                '<div class="d-flex justify-content-between">'
-                f'<strong style="color: {colour};">{status}</strong>'
-                '</div>')
-
-        camera = models.Camera.objects.get(id=record.pk)
-        if check_ping(camera.ip_address):
-            return get_html_status('green', 'Доступна')
-        return get_html_status('red', 'Недоступна')
+        return format_html(f'<div class="d-flex justify-content-between" id="id-status-{record.pk}">'
+                           '<strong>Определяется...</strong>'
+                           '</div>')
 
     class Meta(TableStyleMeta):
         model = models.Camera

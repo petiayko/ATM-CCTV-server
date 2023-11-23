@@ -4,11 +4,6 @@ from . import models
 from design.tables import TableStyleMeta
 
 
-# class LiveStreamTable(tables.Table):
-#     class Meta:
-#         pass
-
-
 class ArchiveTable(tables.Table):
     name = tables.Column(verbose_name='Название')
     timestamp = tables.Column(verbose_name='Время записи')

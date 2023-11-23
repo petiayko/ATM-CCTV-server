@@ -22,9 +22,9 @@ class LiveStreamView(TemplateView):
 
 def get_video_stream(request, pk):
     camera = get_object_or_404(Camera, pk=pk)
-    return StreamingHttpResponse(get_stream_content(camera.ip_address, 'ch00_1'))
-    # return HttpResponse(rtsp_connection(camera.ip_address, 'ch00_1'),
-    #                     content_type='multipart/x-mixed-replace; boundary=frame')
+    # return StreamingHttpResponse(get_stream_content(camera.ip_address, 'ch00_1'))
+    return HttpResponse(rtsp_connection(camera.ip_address, 'ch00_1'),
+                        content_type='multipart/x-mixed-replace; boundary=frame')
 
 
 class RecordsListView(SingleTableView):
