@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Camera(models.Model):
-    name = models.CharField(verbose_name='Имя камеры', max_length=20, null=False, blank=False)
-    ip_address = models.CharField(verbose_name='IP адрес камеры', max_length=15, null=False, blank=False)
+    name = models.CharField(verbose_name='Имя камеры', max_length=50, null=False, blank=False)
+    ip_address = models.CharField(verbose_name='IP адрес камеры', max_length=15, unique=True, null=False, blank=False)
     prerecord_time_sec = models.PositiveIntegerField(verbose_name='Время предзаписи, сек', default=5, null=False,
                                                      blank=False)
     postrecord_time_sec = models.PositiveIntegerField(verbose_name='Время постзаписи, сек', default=0, null=False,
