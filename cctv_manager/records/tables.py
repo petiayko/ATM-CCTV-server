@@ -4,9 +4,9 @@ from . import models
 from design.tables import TableStyleMeta
 
 
-class LiveStreamTable(tables.Table):
-    class Meta:
-        pass
+# class LiveStreamTable(tables.Table):
+#     class Meta:
+#         pass
 
 
 class ArchiveTable(tables.Table):

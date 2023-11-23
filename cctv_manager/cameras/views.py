@@ -14,10 +14,7 @@ class CamerasListView(SingleTableView):
     table_class = tables.CamerasTable
 
     def get_queryset(self):
-        fields = [
-            'name',
-            'ip_address',
-        ]
+        fields = ['name', 'ip_address']
         return super().get_queryset().only(*fields)
 
 
