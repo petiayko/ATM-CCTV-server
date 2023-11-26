@@ -12,34 +12,22 @@
                 <div class="container">
                     {% for camera1, camera2 in cameras %}
                     <div class="row">
-                        <div class="col" camera-id="{{camera1.id}}">
+                        <div class="col mb-3" camera-id="{{camera1.id}}">
                             <div class="mb-3" id="camera-name-id-{{camera1.id}}">
                                 <a href="{% url 'camera_detail' camera1.id %}">{{ camera1.name }}</a>
-                                ({{ camera1.ip_address }}) - <strong style="color: red;">Недоступна</strong>
+                                ({{ camera1.ip_address }}) - <strong>Определяется...</strong>
                             </div>
-                            {% if 2 == 1 %}
-                            <img src="{% static 'images/temp.jpg' %}">
-                            <button class="btn btn-primary mt-3" style="display: flex;">Начать запись</button>
-                            {% else %}
-                            <p>Не удалось получить изображение с камеры. Убедитесь, что устройство в рабочем состоянии,
-                                доступно и повторите позже.</p>
-                            {% endif %}
+                            <p>Устанавливается соединение с камерой.</p>
                         </div>
                         {% if camera2 == None %}
                         <div class="col" id="camera-empty"></div>
                         {% else %}
-                        <div class="col" camera-id="{{camera2.id}}">
+                        <div class="col mb-3" camera-id="{{camera2.id}}">
                             <div class="mb-3" id="camera-name-id-{{camera2.id}}">
                                 <a href="{% url 'camera_detail' camera2.id %}">{{ camera2.name }}</a>
-                                ({{ camera2.ip_address }}) - <strong style="color: green;">Доступна</strong>
+                                ({{ camera1.ip_address }}) - <strong>Определяется...</strong>
                             </div>
-                            {% if 1 == 1 %}
-                            <img src="{% static 'images/temp.jpg' %}">
-                            <button class="btn btn-primary mt-3" style="display: flex;">Начать запись</button>
-                            {% else %}
-                            <p>Не удалось получить изображение с камеры. Убедитесь, что устройство в рабочем состоянии,
-                                доступно и повторите позже.</p>
-                            {% endif %}
+                            <p>Устанавливается соединение с камерой.</p>
                         </div>
                         {% endif %}
                     </div>
@@ -59,23 +47,42 @@
 {% block additional_js %}
 <script>
     $(function() {
-        $('tbody tr').each(function() {
-            let camera_id = $(this).attr('camera-id');
+        $('.col').each(function() {
+            if ($(this).attr('id') === 'camera-empty') {
+                return;
+            }
+            let camera_id = $(this).attr('camera-id')
             $.ajax({
                 url: '/cameras/' + camera_id + '/ping',
                 method: 'get',
                 success: function(data) {
                     if (data.success) {
-                        $('#id-status-' + camera_id).parent().html('<strong style="color: green">Доступна</strong>')
+                        $('#camera-name-id-' + camera_id).children().last().replaceWith(
+                            '<strong style="color: green">Доступна</strong>')
+                        set_video(camera_id)
                     } else {
-                        $('#id-status-' + camera_id).parent().html('<strong style="color: red">Недоступна</strong>')
+                        $('#camera-name-id-' + camera_id).children().last().replaceWith(
+                            '<strong style="color: red">Недоступна</strong>')
+                        $('#camera-name-id-' + camera_id).siblings().first().after(
+                          '<p>В настоящий момент камера недоступна.</p>')
+                        $('#camera-name-id-' + camera_id).siblings().first().remove()
                     }
                 },
                 error: function(data) {
-                    $('#status-camera-id').parent().html('<strong style="color: red">Не удалось определить</strong>')
+                    $('#camera-name-id-' + camera_id).children().last().replaceWith(
+                        '<strong style="color: red">Не удалось определить</strong>')
+                    $('#camera-name-id-' + camera_id).siblings().first().after(
+                      '<p>В настоящий момент камера недоступна.</p>')
+                    $('#camera-name-id-' + camera_id).siblings().first().remove()
                 }
             })
         })
     })
+
+    function set_video(camera_id) {
+        $('#camera-name-id-' + camera_id).siblings().first().after('<button class="btn btn-primary mt-3" style="display: flex;">Начать запись</button>')
+        $('#camera-name-id-' + camera_id).siblings().first().after('<img src="{% static 'images/temp.jpg' %}">')
+        $('#camera-name-id-' + camera_id).siblings().first().remove()
+    }
 </script>
 {% endblock %}

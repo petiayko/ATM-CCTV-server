@@ -12,7 +12,7 @@
 <script>
     $(function() {
         $('tbody tr').each(function() {
-            let camera_id = $(this).attr('camera-id');
+            let camera_id = $(this).attr('camera-id')
             $.ajax({
                 url: '/cameras/' + camera_id + '/ping',
                 method: 'get',
@@ -24,7 +24,8 @@
                     }
                 },
                 error: function(data) {
-                    $('#status-camera-id').parent().html('<strong style="color: red">Не удалось определить</strong>')
+                    $('#id-status-' + camera_id).parent().html(
+                      '<strong style="color: red">Не удалось определить</strong>')
                 }
             })
         })

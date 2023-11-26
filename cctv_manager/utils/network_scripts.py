@@ -1,16 +1,13 @@
+from pythonping import ping
+
 import cv2
 import platform
 import subprocess
 import time
 
 
-def check_ping(hostname):
-    try:
-        subprocess.check_output(f'ping -{"n" if platform.system().lower() == "windows" else "c"} 1 {hostname}',
-                                shell=True)
-    except Exception:
-        return False
-    return True
+def check_ping(hostname, count=1):
+    return ping(hostname, count=count).success()
 
 
 def rtsp_connection(hostname, quality):
