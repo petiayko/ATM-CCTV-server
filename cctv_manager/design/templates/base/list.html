@@ -9,13 +9,13 @@
                 <div class="card-body">
                     {% block add_button %}{% endblock %}
                     {% if table.data|length > 0 %}
-                    <div>
-                        {% render_table table %}
-                    </div>
+                        <div>
+                            {% render_table table %}
+                        </div>
                     {% else %}
-                    <div>
-                        {% block empty_mess %}{% endblock %}
-                    </div>
+                        <div>
+                            {% block empty_mess %}{% endblock %}
+                        </div>
                     {% endif %}
                 </div>
             </div>

@@ -5,8 +5,7 @@ from . import models
 
 class CameraAddForm(forms.ModelForm):
     name = forms.CharField(
-        label='Имя',
-        help_text='Имя камеры, которое будет отображаться в системе',
+        label='Имя камеры',
         strip=True,
         widget=forms.TextInput(attrs={
             'placeholder': ''
@@ -15,7 +14,6 @@ class CameraAddForm(forms.ModelForm):
 
     ip_address = forms.CharField(
         label='IP адрес',
-        help_text='IP адрес камеры, по которому к ней можно обратиться',
         strip=True,
         widget=forms.TextInput(attrs={
             'placeholder': ''

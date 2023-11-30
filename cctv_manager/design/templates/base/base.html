@@ -35,39 +35,39 @@
 </head>
 <body class="{% block body_class %}hold-transition sidebar-mini layout-fixed{% endblock %} h-custom"
       style="display: flex; flex-direction: column;">
-{% block body %}
-<div class="wrapper" style="display: flex; flex-direction: column; flex-grow: 1;">
-    <div>{% include 'base/header.html' %}</div>
-    <div class="content-wrapper"
-         style="background-color: #e9ecef; display: flex; flex-grow: 1; flex-direction: column;">
-        {% block content_header %}
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="mb-2">
-                    <div>
-                        <h1 class="m-0">
-                            {% block page_name %}{% endblock %}
-                        </h1>
+    {% block body %}
+        <div class="wrapper" style="display: flex; flex-direction: column; flex-grow: 1;">
+            <div>{% include 'base/header.html' %}</div>
+            <div class="content-wrapper"
+                 style="background-color: #e9ecef; display: flex; flex-grow: 1; flex-direction: column;">
+                {% block content_header %}
+                    <div class="content-header">
+                        <div class="container-fluid">
+                            <div class="mb-2">
+                                <div>
+                                    <h1 class="m-0">
+                                        {% block page_name %}{% endblock %}
+                                    </h1>
+                                </div>
+                                <div>
+                                    <ol class="breadcrumb  justify-content-end">
+                                        {% block breadcrumbs %}{% endblock %}
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <ol class="breadcrumb  justify-content-end">
-                            {% block breadcrumbs %}{% endblock %}
-                        </ol>
+                {% endblock %}
+                <section class="content">
+                    <div class="container-fluid">
+                        {% block content %}{% endblock %}
                     </div>
-                </div>
+                </section>
+            </div>
+            <div class="flex-colum text-center py-4 px-4 px-xl-5" style="background-color: white">
+                {% include 'base/footer.html' %}
             </div>
         </div>
-        {% endblock %}
-        <section class="content">
-            <div class="container-fluid">
-                {% block content %}{% endblock %}
-            </div>
-        </section>
-    </div>
-    <div class="flex-colum text-center py-4 px-4 px-xl-5" style="background-color: white">
-        {% include 'base/footer.html' %}
-    </div>
-</div>
-{% endblock %}
+    {% endblock %}
 </body>
 </html>
