@@ -43,6 +43,8 @@ pip install -r requirements.txt
 
 ``` bash
 mkdir -p /data/config/cctv_manager
+touch .env
+echo APP_KEY='secret-key' > .env
 cd cctv_manager
 python manage.py migrate
 python manage.py loaddata fixtures/users.json
