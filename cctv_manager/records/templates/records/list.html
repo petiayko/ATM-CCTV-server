@@ -6,7 +6,7 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <div class="card mb-3 mr-3">
+        <div class="card mb-3">
             <div class="card-body">
                 {% if records|length > 0 %}
                 <div class="row">
@@ -55,37 +55,36 @@
                                 <p class="card-text">Длительность видео: {{ record.record_duration }}</p>
                                 <a href="{% url 'record_download' record.id %}" class="btn btn-primary">Скачать</a>
                                 <button class="btn btn-primary" id="id-record-edit-{{ record.id }}"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#id-edit-modal-{{ record.id }}">Изменить имя
+                                        data-bs-toggle="modal" data-bs-target="#id-edit-modal-{{ record.id }}">Изменить
+                                    имя
                                 </button>
                                 <div class="modal fade" id="id-edit-modal-{{ record.id }}" tabindex="-1"
-                                     aria-labelledby="editModalLabel{{ record.id }}"
-                                     aria-hidden="true">
+                                     aria-labelledby="editModalLabel{{ record.id }}" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="editModalLabel{{ record.id }}">Введите новое
-                                                    имя
-                                                    записи.</h5>
+                                                    имя записи.</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
-                                                <form method="POST" action="" class="" enctype="multipart/form-data">
-                                                    {% csrf_token %}
+                                            <form method="POST" action="{% url 'record_edit' record.id %}" class=""
+                                                  enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <div class="modal-body">
                                                     <label for="id-record-new-name-{{ record.id }}"
                                                            class="col-form-label">Новое имя:</label>
-                                                    <input type="text" class="form-control"
+                                                    <input type="text" class="form-control" name="new_name"
                                                            id="id-record-new-name-{{ record.id }}"
                                                            value="{{ record.name }}">
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                    Отмена
-                                                </button>
-                                                <a href="{% url 'record_edit' record.id %}" class="btn btn-primary">Сохранить</a>
-                                            </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Отмена
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -93,14 +92,12 @@
                                         data-bs-toggle="modal" data-bs-target="#id-delete-modal-{{ record.id }}">Удалить
                                 </button>
                                 <div class="modal fade" id="id-delete-modal-{{ record.id }}" tabindex="-1"
-                                     aria-labelledby="deleteModalLabel{{ record.id }}"
-                                     aria-hidden="true">
+                                     aria-labelledby="deleteModalLabel{{ record.id }}" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="deleteModalLabel{{ record.id }}">Вы уверены,
-                                                    что хотите
-                                                    удалить эту запись?</h5>
+                                                    что хотите удалить эту запись?</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
@@ -121,7 +118,35 @@
                     </div>
                 </div>
                 {% endfor %}
-                {% else %}
+                {% elif records|length == 0 and search is not none %}
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group mb-3 mr-3">
+                            <select class="form-select">
+                                <option value="0" {% if sort == 0 %} selected {% endif %}>По дате по убыванию</option>
+                                <option value="1" {% if sort == 1 %} selected {% endif %}>По дате по возрастанию</option>
+                                <option value="2" {% if sort == 2 %} selected {% endif %}>По названию (от А до Я)
+                                </option>
+                                <option value="3" {% if sort == 3 %} selected {% endif %}>По названию (от Я до А)
+                                </option>
+                            </select>
+                            <button class="btn btn-primary" type="button" onclick="sort()">Сортировать</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group mb-3 mr-3">
+                            <input type="text" class="form-control" placeholder="Введите имя" id="id-search-text"
+                                   value="{{ search }}">
+                            <button class="btn btn-primary" type="button" id="id_search_button" onclick="search()">
+                                Поиск
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h2>Нет ни одной сохраненной записи, удовлетворяющей заданным условиям.</h2>
+                </div>
+                {% elif records|length == 0 and search is none %}
                 <div>
                     <h2>Нет ни одной сохраненной записи.</h2>
                 </div>

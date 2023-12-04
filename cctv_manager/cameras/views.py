@@ -58,6 +58,9 @@ def camera_delete(request, pk):
 
 def ping_camera(request, pk):
     camera = get_object_or_404(models.Camera, pk=pk)
-    if check_ping(camera.ip_address):
-        return JsonResponse({'success': True})
-    return JsonResponse({'success': False})
+    try:
+        if check_ping(camera.ip_address):
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False})
+    except Exception as e:
+        return JsonResponse({'success': False}, status=500)

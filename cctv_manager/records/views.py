@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect, FileResponse, Http40
 from django_tables2 import SingleTableView
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.db.models import Q
 
 from . import models, tables, forms
@@ -64,18 +64,22 @@ class RecordsListView(TemplateView):
         return context
 
 
+class RecordEditView(BSModalUpdateView):
+    model = models.Record
+    template_name = 'records/record_edit.html'
+    form_class = forms.RecordEditForm
+
+    def get_success_url(self):
+        return reverse_lazy('records_list')
+
+
 def record_edit(request, pk):
+    if request.method == 'GET':
+        return HttpResponse(status=405)
     record = get_object_or_404(models.Record, pk=pk)
-    return HttpResponseRedirect(reverse_lazy('records_list'))
-
-
-# class RecordEditView(BSModalUpdateView):
-#     model = models.Record
-#     template_name = 'records/record_edit.html'
-#     form_class = forms.RecordEditForm
-#
-#     def get_success_url(self):
-#         return reverse_lazy('records_list')
+    record.name = request.POST.get('new_name', record.name)
+    record.save()
+    return redirect('records_list')
 
 
 def record_delete(request, pk):
@@ -94,7 +98,8 @@ def record_download(request, pk):
 def record_preview(request, pk):
     record = get_object_or_404(models.Record, pk=pk)
     if not os.path.exists(record.location):
-        return None
+        return HttpResponse(status=404)
+
     f = cv2.VideoCapture(record.location)
     ret, frame = f.read()
     f.release()
