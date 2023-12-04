@@ -1,6 +1,6 @@
 import cv2
-import os
 import datetime
+import os
 from django.db import models
 
 
@@ -39,9 +39,3 @@ class Record(models.Model):
         video = cv2.VideoCapture(self.location)
         duration = video.get(cv2.CAP_PROP_FRAME_COUNT) / video.get(cv2.CAP_PROP_FPS)
         return f'{round(duration / 60)} мин {round(duration % 60)} с'
-
-    @property
-    def record_preview(self):
-        if not os.path.exists(self.location):
-            return 'не удалось определить.'
-        return '124'

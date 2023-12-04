@@ -9,4 +9,5 @@ urlpatterns = [
     path('archive/<int:pk>/edit', views.record_edit, name='record_edit'),
     path('archive/<int:pk>/delete', views.record_delete, name='record_delete'),
     path('archive/<int:pk>/download', views.record_download, name='record_download'),
+    path('archive/<int:pk>/preview', views.record_preview, name='record_preview'),
 ]

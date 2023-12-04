@@ -13,11 +13,11 @@
                     <div class="col-md-4">
                         <div class="input-group mb-3 mr-3">
                             <select class="form-select">
-                                <option value="0" {% if sort== 0 %} selected {% endif %}>По дате по убыванию</option>
-                                <option value="1" {% if sort== 1 %} selected {% endif %}>По дате по возрастанию</option>
-                                <option value="2" {% if sort== 2 %} selected {% endif %}>По названию (от А до Я)
+                                <option value="0" {% if sort == 0 %} selected {% endif %}>По дате по убыванию</option>
+                                <option value="1" {% if sort == 1 %} selected {% endif %}>По дате по возрастанию</option>
+                                <option value="2" {% if sort == 2 %} selected {% endif %}>По названию (от А до Я)
                                 </option>
-                                <option value="3" {% if sort== 3 %} selected {% endif %}>По названию (от Я до А)
+                                <option value="3" {% if sort == 3 %} selected {% endif %}>По названию (от Я до А)
                                 </option>
                             </select>
                             <button class="btn btn-primary" type="button" onclick="sort()">Сортировать</button>
@@ -37,7 +37,8 @@
                 <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="{% static 'images/temp.jpg' %}" class="card-img-top" alt="...">
+                            {#<img src="data:image/png;base64,{{ record.record_preview }}" alt="{{ record.name }}"/>#}
+                            <img src="{% url 'record_preview' record.id %}"/>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">

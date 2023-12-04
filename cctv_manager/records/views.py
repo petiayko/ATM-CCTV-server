@@ -1,3 +1,4 @@
+import cv2
 import os
 from bootstrap_modal_forms.generic import BSModalUpdateView
 from django.http import HttpResponse, HttpResponseRedirect, FileResponse, Http404
@@ -48,10 +49,10 @@ class RecordsListView(TemplateView):
             context['records'] = records.order_by('-timestamp')
             return context
         if 'name' in self.request.GET['sort']:
-            context['sort'] = 2
+            context['sort'] = 3
             records = records.order_by('name')
         if '-name' in self.request.GET['sort']:
-            context['sort'] = 3
+            context['sort'] = 2
             records = records.order_by('-name')
         if 'timestamp' in self.request.GET['sort']:
             context['sort'] = 1
@@ -88,3 +89,14 @@ def record_download(request, pk):
     if os.path.exists(record.location):
         return FileResponse(open(record.location, 'rb'), as_attachment=True, filename=f'{record.name}.mp4')
     raise Http404('File not found')
+
+
+def record_preview(request, pk):
+    record = get_object_or_404(models.Record, pk=pk)
+    if not os.path.exists(record.location):
+        return None
+    f = cv2.VideoCapture(record.location)
+    ret, frame = f.read()
+    f.release()
+    resize = cv2.resize(frame, (490, 267))
+    return HttpResponse(cv2.imencode('.jpg', resize)[1].tostring(), content_type='image/jpg')
