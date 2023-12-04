@@ -3,13 +3,12 @@ from django.utils.html import format_html
 
 from . import models
 from design.tables import TableStyleMeta
-from utils.network_scripts import check_ping
 
 
 class CamerasTable(tables.Table):
     name = tables.Column(verbose_name='Имя')
     ip_address = tables.Column(verbose_name='IP адрес', orderable=False)
-    status = tables.TemplateColumn(template_name='cameras/camera_status.html', verbose_name='Статус', orderable=True)
+    status = tables.TemplateColumn(template_name='cameras/camera_status.html', verbose_name='Статус', orderable=False)
     detail = tables.TemplateColumn(template_name='cameras/camera_detail.html', verbose_name='', orderable=False)
 
     def render_status(self, record):
