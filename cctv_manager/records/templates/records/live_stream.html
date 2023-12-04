@@ -43,30 +43,6 @@
                     {% endif %}
                 </div>
                 {% endfor %}
-                <div class="container">
-                    {% for camera1, camera2 in cameras %}
-                    <div class="row">
-                        <div class="col mb-3" camera-id="{{camera1.id}}">
-                            <div class="mb-3" id="id-camera-name-{{camera1.id}}">
-                                <a href="{% url 'camera_detail' camera1.id %}">{{ camera1.name }}</a>
-                                ({{ camera1.ip_address }}) - <strong>Определяется...</strong>
-                            </div>
-                            <p>Устанавливается соединение с камерой.</p>
-                        </div>
-                        {% if camera2 == None %}
-                        <div class="col" id="id-camera-empty"></div>
-                        {% else %}
-                        <div class="col mb-3" camera-id="{{camera2.id}}">
-                            <div class="mb-3" id="id-camera-name-{{camera2.id}}">
-                                <a href="{% url 'camera_detail' camera2.id %}">{{ camera2.name }}</a>
-                                ({{ camera2.ip_address }}) - <strong>Определяется...</strong>
-                            </div>
-                            <p>Устанавливается соединение с камерой.</p>
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </div>
                 {% else %}
                 <div>
                     <h2>В системе нет зарегистрированных камер. Перейдите на <a
