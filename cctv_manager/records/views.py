@@ -1,14 +1,12 @@
 import cv2
 import os
-from bootstrap_modal_forms.generic import BSModalUpdateView
 from django.http import HttpResponse, HttpResponseRedirect, FileResponse, Http404
-from django_tables2 import SingleTableView
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.shortcuts import get_object_or_404, redirect
 from django.db.models import Q
 
-from . import models, tables, forms
+from . import models
 from cameras.models import Camera
 from utils.network_scripts import rtsp_connection, get_stream_content
 
@@ -62,15 +60,6 @@ class RecordsListView(TemplateView):
             records = records.order_by('-timestamp')
         context['records'] = records
         return context
-
-
-class RecordEditView(BSModalUpdateView):
-    model = models.Record
-    template_name = 'records/record_edit.html'
-    form_class = forms.RecordEditForm
-
-    def get_success_url(self):
-        return reverse_lazy('records_list')
 
 
 def record_edit(request, pk):

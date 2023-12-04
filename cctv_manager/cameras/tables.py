@@ -3,7 +3,6 @@ from django.utils.html import format_html
 
 from . import models
 from design.tables import TableStyleMeta
-from utils.network_scripts import check_ping
 
 
 class CamerasTable(tables.Table):
