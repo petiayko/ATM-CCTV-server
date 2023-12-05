@@ -1,8 +1,11 @@
 from django.contrib.auth import logout, models
-from django.shortcuts import redirect, render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect, render, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, UpdateView
 from django_tables2 import SingleTableView
 
-from . import tables
+from . import tables, forms
 from utils.rbac_scripts import is_user_able
 
 
@@ -25,6 +28,7 @@ class StaffListView(SingleTableView):
         context.update({
             'is_able_add': is_user_able(self.request.user, 'U', 'A'),
             'is_able_delete': is_user_able(self.request.user, 'U', 'D'),
+            'is_able_edit': is_user_able(self.request.user, 'U', 'C'),
         })
         return context
 
@@ -33,5 +37,36 @@ class StaffListView(SingleTableView):
         return super().get_queryset().only(*fields)
 
 
+class StaffAddView(CreateView):
+    model = models.User
+    template_name = 'accounts/create.html'
+    form_class = forms.StaffAddForm
+
+    def get_success_url(self):
+        return reverse_lazy('staff_list')
+
+
+class StaffEditView(UpdateView):
+    model = models.User
+    template_name = 'accounts/edit.html'
+    form_class = forms.StaffEditForm
+
+    def get_success_url(self):
+        return reverse_lazy('staff_list')
+
+
+class StaffChangePasswordView(UpdateView):
+    model = models.User
+    template_name = 'accounts/password.html'
+    form_class = forms.StaffChangePasswordForm
+
+    def get_success_url(self):
+        return reverse_lazy('staff_list')
+
+
 def staff_delete(request, pk):
-    pass
+    if not is_user_able(request.user, 'U', 'D'):
+        return HttpResponse(status=404)
+    user = get_object_or_404(models.User, pk=pk)
+    user.delete()
+    return HttpResponseRedirect(reverse_lazy('staff_list'))

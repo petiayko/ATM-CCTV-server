@@ -13,13 +13,9 @@
                 <li class="nav-item">
                     <a class="navbar-brand" href="{% url 'cameras_list' %}">Камеры</a>
                 </li>
-                {% for group in user.groups.all %}
-                {% if group.name == 'NA' %}
                 <li class="nav-item">
                     <a class="navbar-brand" href="{% url 'staff_list' %}">Персонал</a>
                 </li>
-                {% endif %}
-                {% endfor %}
                 <li class="nav-item">
                     <a class="navbar-brand" href="{% url 'information' %}">Справка</a>
                 </li>
