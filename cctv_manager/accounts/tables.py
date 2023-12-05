@@ -10,8 +10,8 @@ class StaffTable(tables.Table):
     first_name = tables.Column(verbose_name='Имя')
     last_name = tables.Column(verbose_name='Фамилия')
     groups = tables.Column(verbose_name='Роль', orderable=False)
-    edit = tables.TemplateColumn(template_name='accounts/staff_edit.html', verbose_name='', orderable=False)
-    delete = tables.TemplateColumn(template_name='accounts/staff_delete.html', verbose_name='', orderable=False)
+    edit = tables.TemplateColumn(template_name='accounts/action_edit.html', verbose_name='', orderable=False)
+    delete = tables.TemplateColumn(template_name='accounts/action_delete.html', verbose_name='', orderable=False)
 
     def render_username(self, value, record):
         if self.request.user.id == record.pk:

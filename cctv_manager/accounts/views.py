@@ -57,7 +57,7 @@ class StaffEditView(UpdateView):
 
 class StaffChangePasswordView(UpdateView):
     model = models.User
-    template_name = 'accounts/password.html'
+    template_name = 'accounts/edit_password.html'
     form_class = forms.StaffChangePasswordForm
 
     def get_form_kwargs(self):

@@ -44,7 +44,11 @@ class StaffAddForm(forms.ModelForm):
         label='Роль',
         required=True,
         widget=forms.RadioSelect,
-        choices=[(1, 'Сетевой администратор'), (2, 'Локальный администратор'), (3, 'Оператор')],
+        choices=[
+            (1, 'Сетевой администратор'),
+            (2, 'Локальный администратор'),
+            (3, 'Оператор')
+        ],
         initial=3,
     )
 
@@ -85,8 +89,11 @@ class StaffEditForm(forms.ModelForm):
         label='Роль',
         required=True,
         widget=forms.RadioSelect,
-        choices=[(1, 'Сетевой администратор'), (2, 'Локальный администратор'), (3, 'Оператор')],
-        initial=3,
+        choices=[
+            (1, 'Сетевой администратор'),
+            (2, 'Локальный администратор'),
+            (3, 'Оператор')
+        ],
     )
 
     def __init__(self, *args, **kwargs):

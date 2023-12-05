@@ -1,10 +1,8 @@
-from typing import Any, Dict
-
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView
 from django_tables2 import SingleTableView
-from django.shortcuts import get_object_or_404
 
 from . import forms, models, tables
 from utils.network_scripts import check_ping
@@ -76,7 +74,7 @@ class CameraAddView(CameraAddFilterMixin, CreateView):
 class CameraEditView(CameraChangeFilterMixin, UpdateView):
     model = models.Camera
     template_name = 'cameras/edit.html'
-    fields = ['name', 'ip_address', 'prerecord_time_sec', 'postrecord_time_sec', 'video_length_min']
+    fields = ['name', 'prerecord_time_sec', 'postrecord_time_sec', 'video_length_min']
 
     def get_success_url(self):
         return reverse_lazy('camera_detail', kwargs={'pk': self.object.id})

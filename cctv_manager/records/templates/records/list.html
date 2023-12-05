@@ -27,7 +27,7 @@
                         <div class="input-group mb-3 mr-3">
                             <input type="text" class="form-control" placeholder="Введите имя" id="id-search-text"
                                    value="{{ search }}">
-                            <button class="btn btn-primary" type="button" id="id_search_button" onclick="search()">
+                            <button class="btn btn-primary" type="button" id="id-search-button" onclick="search()">
                                 Поиск
                             </button>
                         </div>
@@ -63,11 +63,11 @@
                                 </button>
                                 {% endif %}
                                 <div class="modal fade" id="id-edit-modal-{{ record.id }}" tabindex="-1"
-                                     aria-labelledby="editModalLabel{{ record.id }}" aria-hidden="true">
+                                     aria-labelledby="id-edit-modal-label-{{ record.id }" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editModalLabel{{ record.id }}">Введите новое
+                                                <h5 class="modal-title" id="id-edit-modal-label-{{ record.id }">Введите новое
                                                     имя записи.</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
@@ -98,11 +98,11 @@
                                 </button>
                                 {% endif %}
                                 <div class="modal fade" id="id-delete-modal-{{ record.id }}" tabindex="-1"
-                                     aria-labelledby="deleteModalLabel{{ record.id }}" aria-hidden="true">
+                                     aria-labelledby="id-delete-modal-label-{{ record.id }}" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel{{ record.id }}">Вы уверены,
+                                                <h5 class="modal-title" id="id-delete-modal-label-{{ record.id }}">Вы уверены,
                                                     что хотите удалить эту запись?</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
@@ -143,7 +143,7 @@
                         <div class="input-group mb-3 mr-3">
                             <input type="text" class="form-control" placeholder="Введите имя" id="id-search-text"
                                    value="{{ search }}">
-                            <button class="btn btn-primary" type="button" id="id_search_button" onclick="search()">
+                            <button class="btn btn-primary" type="button" id="id-search-button" onclick="search()">
                                 Поиск
                             </button>
                         </div>

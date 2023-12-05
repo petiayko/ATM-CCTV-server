@@ -1,14 +1,13 @@
 import cv2
 import os
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, FileResponse, Http404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
-from django.shortcuts import get_object_or_404, redirect
-from django.db.models import Q
 
 from . import models
 from cameras.models import Camera
-from utils.network_scripts import rtsp_connection, get_stream_content
 from utils.rbac_scripts import is_user_able
 
 

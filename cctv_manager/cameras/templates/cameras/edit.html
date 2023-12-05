@@ -11,7 +11,7 @@
                     <form method="POST" action="" class="" enctype="multipart/form-data">
                         {% csrf_token %}
                         {% bootstrap_form form %}
-                        <button type="submit" class="btn btn-primary" id="id-person-save">Сохранить</button>
+                        <button type="submit" class="btn btn-primary" id="id-camera-save">Сохранить</button>
                         <a href="{% url 'camera_detail' object.id %}" class="btn btn-danger">Отмена</a>
                     </form>
                 </div>

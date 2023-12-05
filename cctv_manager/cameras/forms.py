@@ -7,6 +7,7 @@ class CameraAddForm(forms.ModelForm):
     name = forms.CharField(
         label='Имя камеры',
         strip=True,
+        required=True,
         widget=forms.TextInput(attrs={
             'placeholder': ''
         }),
@@ -15,6 +16,7 @@ class CameraAddForm(forms.ModelForm):
     ip_address = forms.CharField(
         label='IP адрес',
         strip=True,
+        required=True,
         widget=forms.TextInput(attrs={
             'placeholder': ''
         }),
@@ -25,8 +27,9 @@ class CameraAddForm(forms.ModelForm):
         help_text='Длительность сохраняемого фрагмента до начала активности в кадре',
         min_value=0,
         step_size=1,
+        initial=5,
         widget=forms.NumberInput(attrs={
-            'placeholder': '0'
+            'placeholder': ''
         }),
     )
 
@@ -35,8 +38,9 @@ class CameraAddForm(forms.ModelForm):
         help_text='Длительность сохраняемого фрагмента после окончания активности в кадре',
         min_value=0,
         step_size=1,
+        initial=0,
         widget=forms.NumberInput(attrs={
-            'placeholder': '0'
+            'placeholder': ''
         }),
     )
 
@@ -45,8 +49,9 @@ class CameraAddForm(forms.ModelForm):
         help_text='Максимальная длительность сохраняемого видео',
         min_value=1,
         step_size=1,
+        initial=1,
         widget=forms.NumberInput(attrs={
-            'placeholder': '1'
+            'placeholder': ''
         }),
     )
 
