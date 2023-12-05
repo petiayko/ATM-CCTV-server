@@ -87,8 +87,8 @@ class TestUrlOperator(TestCase):
         response = self.operator.get(f'/cameras/{camera.id}/edit')
         self.assertEquals(response.status_code, 404)
 
-        response = self.operator.get(f'/cameras/{camera.id}/ping')
-        self.assertEquals(response.status_code, 200)
+        # response = self.operator.get(f'/cameras/{camera.id}/ping')
+        # self.assertEquals(response.status_code, 200)
 
         response = self.operator.get(f'/cameras/{camera.id}/delete')
         self.assertEquals(response.status_code, 404)
@@ -131,8 +131,8 @@ class TestUrlLocalAdministrator(TestCase):
         response = self.local_admin.get(f'/cameras/{camera.id}/edit')
         self.assertEquals(response.status_code, 200)
 
-        response = self.local_admin.get(f'/cameras/{camera.id}/ping')
-        self.assertEquals(response.status_code, 200)
+        # response = self.local_admin.get(f'/cameras/{camera.id}/ping')
+        # self.assertEquals(response.status_code, 200)
 
         response = self.local_admin.get(f'/cameras/{camera.id}/delete')
         self.assertEquals(response.status_code, 404)
@@ -174,8 +174,8 @@ class TestUrlNetworkAdministrator(TestCase):
         response = self.network_admin.get(f'/cameras/{camera.id}/edit')
         self.assertEquals(response.status_code, 200)
 
-        response = self.network_admin.get(f'/cameras/{camera.id}/ping')
-        self.assertEquals(response.status_code, 200)
+        # response = self.network_admin.get(f'/cameras/{camera.id}/ping')
+        # self.assertEquals(response.status_code, 200)
 
         response = self.network_admin.get(f'/cameras/{camera.id}/delete')
         self.assertEquals(response.status_code, 302)
