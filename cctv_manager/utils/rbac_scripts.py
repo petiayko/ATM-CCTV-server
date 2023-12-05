@@ -8,4 +8,10 @@ def is_user_able(user, obj, action):
     role = role[0]
     if role not in settings.ACCESS_MATRIX:
         raise RuntimeError(f'{user} have unexpected role: {role}')
-    return settings.ACCESS_MATRIX[role][obj].get(action, 0) == 1
+    actions = settings.ACCESS_MATRIX[role].get(obj)
+    if actions is None:
+        raise RuntimeError(f'Object {obj} is unknown for this role: {role}')
+    is_able = actions.get(action)
+    if is_able is None:
+        raise RuntimeError(f'Action {obj} is unknown for this role: {role} and action: {action}')
+    return is_able == 1
