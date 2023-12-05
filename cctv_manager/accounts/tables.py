@@ -32,6 +32,3 @@ class StaffTable(tables.Table):
     class Meta(TableStyleMeta):
         model = models.User
         fields = 'username', 'first_name', 'last_name', 'groups',
-        row_attrs = {
-            'user-id': lambda record: record.pk
-        }

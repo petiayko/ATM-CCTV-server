@@ -2,8 +2,12 @@
 <div class="d-flex justify-content-between">
     <a href="{% url 'staff_edit' record.id %}" class="btn btn-sm btn-primary mr-2">Изменить</a>
 </div>
-{% else %}
+{% elif record.id == user.id %}
 <div class="d-flex justify-content-between">
     <a href="{% url 'staff_change_password' record.id %}" class="btn btn-sm btn-primary mr-2">Изменить пароль</a>
+</div>
+{% else %}
+<div class="d-flex justify-content-between">
+    <button class="btn btn-sm btn-primary mr-2" disabled>Изменить</button>
 </div>
 {% endif %}

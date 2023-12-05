@@ -60,6 +60,11 @@ class StaffChangePasswordView(UpdateView):
     template_name = 'accounts/password.html'
     form_class = forms.StaffChangePasswordForm
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
     def get_success_url(self):
         return reverse_lazy('staff_list')
 

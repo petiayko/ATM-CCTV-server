@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import models
+from django.core.exceptions import ValidationError
 
 
 class StaffAddForm(forms.ModelForm):
@@ -88,6 +89,10 @@ class StaffEditForm(forms.ModelForm):
         initial=3,
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['groups'].initial = models.User.objects.get(id=self.instance.pk).groups.first().id
+
     def save(self, commit=True):
         instance = super().save(commit=False)
         for group_id in instance.groups.all().values_list('id', flat=True):
@@ -103,7 +108,16 @@ class StaffEditForm(forms.ModelForm):
 
 
 class StaffChangePasswordForm(forms.ModelForm):
-    password = forms.CharField(
+    old_password = forms.CharField(
+        label='Текущий пароль',
+        strip=False,
+        required=True,
+        widget=forms.PasswordInput(attrs={
+            'placeholder': ''
+        })
+    )
+
+    new_password = forms.CharField(
         label='Новый пароль',
         strip=False,
         required=True,
@@ -121,12 +135,24 @@ class StaffChangePasswordForm(forms.ModelForm):
         })
     )
 
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if not self.request.user.check_password(cleaned_data.get('old_password')):
+            raise ValidationError('Вы ввели неверный пароль', 'invalid')
+        if cleaned_data.get('new_password') != cleaned_data.get('password_confirm'):
+            raise ValidationError('Введенные пароли не совпадают', 'invalid')
+
     def save(self, commit=True):
         instance = super().save(commit=False)
+        instance.set_password(self.cleaned_data['new_password'])
         if commit:
             instance.save()
         return instance
 
     class Meta:
         model = models.User
-        fields = 'password',
+        fields = 'old_password', 'new_password', 'password_confirm',
