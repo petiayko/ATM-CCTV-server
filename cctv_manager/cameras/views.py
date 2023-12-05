@@ -19,16 +19,6 @@ class CameraChangeFilterMixin:
         return models.Camera.objects.for_user(self.request.user, action='C')
 
 
-class CameraAddFilterMixin:
-    def get_queryset(self):
-        return models.Camera.objects.for_user(self.request.user, action='A')
-
-
-class CameraDeleteFilterMixin:
-    def get_queryset(self):
-        return models.Camera.objects.for_user(self.request.user, action='D')
-
-
 class CamerasListView(CameraViewFilterMixin, SingleTableView):
     model = models.Camera
     template_name = 'cameras/list.html'
@@ -62,10 +52,15 @@ class CameraDetailView(CameraViewFilterMixin, DetailView):
         return context
 
 
-class CameraAddView(CameraAddFilterMixin, CreateView):
+class CameraAddView(CreateView):
     model = models.Camera
     template_name = 'cameras/create.html'
     form_class = forms.CameraAddForm
+
+    def get(self, request, *args, **kwargs):
+        if is_user_able(request.user, 'C', 'A'):
+            return super().get(args, kwargs)
+        return HttpResponseRedirect(reverse_lazy('cameras_list'))
 
     def get_success_url(self):
         return reverse_lazy('camera_detail', kwargs={'pk': self.object.id})

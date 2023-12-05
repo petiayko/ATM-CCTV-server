@@ -1,4 +1,4 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.contrib.auth import get_user_model, models
 from django.conf import settings
 
@@ -56,9 +56,6 @@ class TestRbacOperator(TestCase):
         self.assertFalse(is_user_able(self.user, 'U', 'C'))
         self.assertFalse(is_user_able(self.user, 'U', 'D'))
 
-    def tearDown(self):
-        self.user.delete()
-
 
 class TestRbacLocalAdministrator(TestCase):
     def setUp(self):
@@ -82,9 +79,6 @@ class TestRbacLocalAdministrator(TestCase):
         self.assertFalse(is_user_able(self.user, 'U', 'A'))
         self.assertFalse(is_user_able(self.user, 'U', 'C'))
         self.assertFalse(is_user_able(self.user, 'U', 'D'))
-
-    def tearDown(self):
-        self.user.delete()
 
 
 class TestRbacNetworkAdministrator(TestCase):
@@ -110,9 +104,6 @@ class TestRbacNetworkAdministrator(TestCase):
         self.assertTrue(is_user_able(self.user, 'U', 'C'))
         self.assertTrue(is_user_able(self.user, 'U', 'D'))
 
-    def tearDown(self):
-        self.user.delete()
-
 
 class TestRbacNoRoleUser(TestCase):
     def setUp(self):
@@ -133,9 +124,6 @@ class TestRbacNoRoleUser(TestCase):
             is_user_able(self.user, 'U', 'A')
             is_user_able(self.user, 'U', 'C')
             is_user_able(self.user, 'U', 'D')
-
-    def tearDown(self):
-        self.user.delete()
 
 
 class TestRbacFewRolesUser(TestCase):
@@ -161,9 +149,6 @@ class TestRbacFewRolesUser(TestCase):
             is_user_able(self.user, 'U', 'A')
             is_user_able(self.user, 'U', 'C')
             is_user_able(self.user, 'U', 'D')
-
-    def tearDown(self):
-        self.user.delete()
 
 
 class TestRbacUnknownRoleActionObject(TestCase):
@@ -212,7 +197,3 @@ class TestRbacUnknownRoleActionObject(TestCase):
             is_user_able(self.user1, 'L', 'T')
             is_user_able(self.user1, 'P', 'Y')
             is_user_able(self.user1, 'O', 'I')
-
-    def tearDown(self):
-        self.user.delete()
-        self.user1.delete()
