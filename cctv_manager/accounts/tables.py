@@ -1,0 +1,30 @@
+import django_tables2 as tables
+from django.contrib.auth import models
+
+from design.tables import TableStyleMeta
+
+
+class StaffTable(tables.Table):
+    username = tables.Column(verbose_name='Логин')
+    first_name = tables.Column(verbose_name='Имя')
+    last_name = tables.Column(verbose_name='Фамилия')
+    groups = tables.Column(verbose_name='Роли', orderable=False)
+    delete = tables.TemplateColumn(template_name='accounts/person_delete.html', verbose_name='', orderable=False)
+
+    def render_groups(self, record):
+        output = list()
+        for group in record.groups.all().values_list('name', flat=True):
+            if group == 'O':
+                output.append('Оператор')
+            elif group == 'LA':
+                output.append('Локальный администратор')
+            elif group == 'NA':
+                output.append('Сетевой администратор')
+        return ', '.join(output).capitalize()
+
+    class Meta(TableStyleMeta):
+        model = models.User
+        fields = 'username', 'first_name', 'last_name', 'groups',
+        row_attrs = {
+            'user-id': lambda record: record.pk
+        }

@@ -3,6 +3,17 @@ import datetime
 import os
 from django.db import models
 
+from utils.rbac_scripts import is_user_able
+
+
+class RecordManager(models.Manager):
+    def for_user(self, user, action=None):
+        if action is None:
+            return self.get_queryset()
+        if is_user_able(user, 'R', action):
+            return self.get_queryset()
+        return Record.objects.none()
+
 
 class Record(models.Model):
     name = models.CharField(verbose_name='Имя записи', max_length=100)
@@ -10,6 +21,8 @@ class Record(models.Model):
     timestamp = models.DateTimeField(verbose_name='Время записи', auto_now_add=True)
     camera = models.ForeignKey(to='cameras.Camera', verbose_name='Камера', related_name='record_camera_match',
                                on_delete=models.SET_NULL, blank=True, null=True)
+
+    objects = RecordManager()
 
     class Meta:
         ordering = 'timestamp', 'name',

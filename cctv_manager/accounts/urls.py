@@ -7,5 +7,8 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', views.logout_user, name='logout'),
     path('information/', views.information, name='information'),
+    path('staff/', views.StaffListView.as_view(), name='staff_list'),
+    path('staff/add', views.StaffListView.as_view(), name='staff_add'),
+    path('staff/<int:pk>/delete', views.staff_delete, name='staff_delete'),
     path('', include('django.contrib.auth.urls')),
 ]

@@ -53,11 +53,15 @@
                                 <p class="card-text">Дата записи: {{ record.record_timestamp }}</p>
                                 <p class="card-text">Объем видео: {{ record.record_size }}</p>
                                 <p class="card-text">Длительность видео: {{ record.record_duration }}</p>
+                                {% if is_able_download %}
                                 <a href="{% url 'record_download' record.id %}" class="btn btn-primary">Скачать</a>
+                                {% endif %}
+                                {% if is_able_edit %}
                                 <button class="btn btn-primary" id="id-record-edit-{{ record.id }}"
                                         data-bs-toggle="modal" data-bs-target="#id-edit-modal-{{ record.id }}">Изменить
                                     имя
                                 </button>
+                                {% endif %}
                                 <div class="modal fade" id="id-edit-modal-{{ record.id }}" tabindex="-1"
                                      aria-labelledby="editModalLabel{{ record.id }}" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -88,9 +92,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% if is_able_delete %}
                                 <button type="button" class="btn btn-danger" id="id-record-delete-{{ record.id }}"
                                         data-bs-toggle="modal" data-bs-target="#id-delete-modal-{{ record.id }}">Удалить
                                 </button>
+                                {% endif %}
                                 <div class="modal fade" id="id-delete-modal-{{ record.id }}" tabindex="-1"
                                      aria-labelledby="deleteModalLabel{{ record.id }}" aria-hidden="true">
                                     <div class="modal-dialog">
