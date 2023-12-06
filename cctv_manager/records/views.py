@@ -16,21 +16,6 @@ class RecordViewFilterMixin:
         return models.Record.objects.for_user(self.request.user)
 
 
-class RecordChangeFilterMixin:
-    def get_queryset(self):
-        return models.Record.objects.for_user(self.request.user, action='C')
-
-
-class RecordAddFilterMixin:
-    def get_queryset(self):
-        return models.Record.objects.for_user(self.request.user, action='A')
-
-
-class RecordDeleteFilterMixin:
-    def get_queryset(self):
-        return models.Record.objects.for_user(self.request.user, action='D')
-
-
 class LiveStreamView(RecordViewFilterMixin, TemplateView):
     template_name = 'records/live_stream.html'
 
@@ -42,13 +27,6 @@ class LiveStreamView(RecordViewFilterMixin, TemplateView):
             context['cameras'][-1].append(None)
         context['is_able_add'] = is_user_able(self.request.user, 'R', 'A')
         return context
-
-
-# def get_video_stream(request, pk):
-#     camera = get_object_or_404(Camera, pk=pk)
-#     # return StreamingHttpResponse(get_stream_content(camera.ip_address, 'ch00_1'))
-#     return HttpResponse(rtsp_connection(camera.ip_address, 'ch00_1'),
-#                         content_type='multipart/x-mixed-replace; boundary=frame')
 
 
 class RecordsListView(RecordViewFilterMixin, TemplateView):
