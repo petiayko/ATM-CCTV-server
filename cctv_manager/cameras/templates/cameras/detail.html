@@ -6,64 +6,71 @@
 {% block page_name %}{{ object.name }}{% endblock %}
 
 {% block detail_table %}
-    {% for field_name, field_value in fields %}
-        <tr>
-            <th scope="row" class="w-25">{{ field_name }}</th>
-            <td>{{ field_value }}</td>
-        </tr>
-    {% endfor %}
-    <tr>
-        <th scope="row" class="w-25">Статус</th>
-        <td>
-            <div class="d-flex justify-content-between">
-                <strong id="status-camera-id">Определяется...</strong>
-            </div>
-        </td>
-    </tr>
+{% for field_name, field_value in fields %}
+<tr>
+    <th scope="row" class="w-25">{{ field_name }}</th>
+    <td>{{ field_value }}</td>
+</tr>
+{% endfor %}
+<tr>
+    <th scope="row" class="w-25">Статус</th>
+    <td>
+        <div class="d-flex justify-content-between">
+            <strong id="id-status-camera">Определяется...</strong>
+        </div>
+    </td>
+</tr>
 {% endblock %}
 {% block detail_additional %}
-    <button type="button" class="btn btn-primary" id="id-camera-reboot" data-bs-toggle="modal"
-            data-bs-target="#id_reboot_modal">Перезагрузить</button>
-    <div class="modal fade" id="id_reboot_modal" tabindex="-1" aria-labelledby="rebootModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="rebootModalLabel">Вы уверены, что хотите перезагрузить камеру?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Во время перезагрузки прием видеопотока будет невозможен.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <a href="#" class="btn btn-primary">Перезагрузить</a>
-                </div>
+{% if is_able_reload %}
+<button type="button" class="btn btn-primary" id="id-camera-reboot" data-bs-toggle="modal"
+        data-bs-target="#id-reboot-modal">Перезагрузить
+</button>
+{% endif %}
+<div class="modal fade" id="id-reboot-modal" tabindex="-1" aria-labelledby="rebootModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="id-reboot-modal-label">Вы уверены, что хотите перезагрузить камеру?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Во время перезагрузки прием видеопотока будет невозможен.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <a href="#" class="btn btn-primary">Перезагрузить</a>
             </div>
         </div>
     </div>
-    <a href="{% url 'camera_edit' object.id %}" class="btn btn-primary">Редактировать</a>
-    <button type="button" class="btn btn-danger" id="id-person-delete" data-bs-toggle="modal"
-            data-bs-target="#id_delete_modal">Удалить
-    </button>
-    <div class="modal fade" id="id_delete_modal" tabindex="-1" aria-labelledby="deleteModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Вы уверены, что хотите удалить камеру из системы?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Это действие невозможно отменить.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <a href="{% url 'camera_delete' object.id %}" class="btn btn-danger">Удалить</a>
-                </div>
+</div>
+{% if is_able_edit %}
+<a href="{% url 'camera_edit' object.id %}" class="btn btn-primary">Редактировать</a>
+{% endif %}
+{% if is_able_delete %}
+<button type="button" class="btn btn-danger" id="id-camera-delete" data-bs-toggle="modal"
+        data-bs-target="#id-delete-modal">Удалить
+</button>
+{% endif %}
+<div class="modal fade" id="id-delete-modal" tabindex="-1" aria-labelledby="deleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="id-delete-modal-label">Вы уверены, что хотите удалить камеру из системы?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Это действие невозможно отменить.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                <a href="{% url 'camera_delete' object.id %}" class="btn btn-danger">Удалить</a>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
 {% block additional_js %}
 <script>
@@ -72,13 +79,13 @@
         method: 'get',
         success: function(data) {
             if (data.success) {
-                $('#status-camera-id').parent().html('<strong style="color: green">Доступна</strong>')
+                $('#id-status-camera').parent().html('<strong style="color: green">Доступна</strong>')
             } else {
-                $('#status-camera-id').parent().html('<strong style="color: red">Недоступна</strong>')
+                $('#id-status-camera').parent().html('<strong style="color: red">Недоступна</strong>')
             }
         },
         error: function(data) {
-            $('#status-camera-id').parent().html('<strong style="color: red">Не удалось определить</strong>')
+            $('#id-status-camera').parent().html('<strong style="color: red">Не удалось определить</strong>')
         }
     })
 </script>

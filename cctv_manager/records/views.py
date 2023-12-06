@@ -1,17 +1,22 @@
 import cv2
 import os
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, FileResponse, Http404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
-from django.shortcuts import get_object_or_404, redirect
-from django.db.models import Q
 
 from . import models
 from cameras.models import Camera
-from utils.network_scripts import rtsp_connection, get_stream_content
+from utils.rbac_scripts import is_user_able
 
 
-class LiveStreamView(TemplateView):
+class RecordViewFilterMixin:
+    def get_queryset(self):
+        return models.Record.objects.for_user(self.request.user)
+
+
+class LiveStreamView(RecordViewFilterMixin, TemplateView):
     template_name = 'records/live_stream.html'
 
     def get_context_data(self, **kwargs):
@@ -20,21 +25,20 @@ class LiveStreamView(TemplateView):
         context['cameras'] = [cameras[i:i + 2] for i in range(0, len(cameras), 2)]
         if len(cameras) and len(context['cameras'][-1]) == 1:
             context['cameras'][-1].append(None)
+        context['is_able_add'] = is_user_able(self.request.user, 'R', 'A')
         return context
 
 
-def get_video_stream(request, pk):
-    camera = get_object_or_404(Camera, pk=pk)
-    # return StreamingHttpResponse(get_stream_content(camera.ip_address, 'ch00_1'))
-    return HttpResponse(rtsp_connection(camera.ip_address, 'ch00_1'),
-                        content_type='multipart/x-mixed-replace; boundary=frame')
-
-
-class RecordsListView(TemplateView):
+class RecordsListView(RecordViewFilterMixin, TemplateView):
     template_name = 'records/list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context.update({
+            'is_able_edit': is_user_able(self.request.user, 'R', 'C'),
+            'is_able_delete': is_user_able(self.request.user, 'R', 'D'),
+            'is_able_download': is_user_able(self.request.user, 'R', 'L'),
+        })
         if 'search' in self.request.GET:
             template = self.request.GET['search']
             context['search'] = template
@@ -63,6 +67,8 @@ class RecordsListView(TemplateView):
 
 
 def record_edit(request, pk):
+    if not is_user_able(request.user, 'R', 'C'):
+        return HttpResponse(status=404)
     if request.method == 'GET':
         return HttpResponse(status=405)
     record = get_object_or_404(models.Record, pk=pk)
@@ -72,12 +78,16 @@ def record_edit(request, pk):
 
 
 def record_delete(request, pk):
+    if not is_user_able(request.user, 'R', 'D'):
+        return HttpResponse(status=404)
     record = get_object_or_404(models.Record, pk=pk)
     record.delete()
     return HttpResponseRedirect(reverse_lazy('records_list'))
 
 
 def record_download(request, pk):
+    if not is_user_able(request.user, 'R', 'L'):
+        return HttpResponse(status=404)
     record = get_object_or_404(models.Record, pk=pk)
     if os.path.exists(record.location):
         return FileResponse(open(record.location, 'rb'), as_attachment=True, filename=f'{record.name}.mp4')

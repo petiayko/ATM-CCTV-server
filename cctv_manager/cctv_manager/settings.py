@@ -142,3 +142,36 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'live_stream'
 LOGOUT_REDIRECT_URL = 'login'
 OPEN_URLS = ['logout']
+
+"""
+    NA  - Network Administrator
+    LA  - Local Administrator
+    O   - Operator
+    
+    C   - Camera
+    R   - Record
+    U   - User
+    
+    A   - Add
+    C   - Change
+    D   - Delete
+    R   - Reload
+    L   - Download
+"""
+ACCESS_MATRIX = {
+    'NA': {
+        'C': {'A': 1, 'C': 1, 'D': 1, 'R': 1},
+        'R': {'A': 1, 'C': 1, 'D': 1, 'L': 1},
+        'U': {'A': 1, 'C': 1, 'D': 1}
+    },
+    'LA': {
+        'C': {'A': 0, 'C': 1, 'D': 0, 'R': 1},
+        'R': {'A': 1, 'C': 0, 'D': 0, 'L': 1},
+        'U': {'A': 0, 'C': 0, 'D': 0}
+    },
+    'O': {
+        'C': {'A': 0, 'C': 0, 'D': 0, 'R': 0},
+        'R': {'A': 1, 'C': 0, 'D': 0, 'L': 1},
+        'U': {'A': 0, 'C': 0, 'D': 0}
+    },
+}

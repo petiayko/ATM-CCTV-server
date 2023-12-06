@@ -27,7 +27,7 @@
                         <div class="input-group mb-3 mr-3">
                             <input type="text" class="form-control" placeholder="Введите имя" id="id-search-text"
                                    value="{{ search }}">
-                            <button class="btn btn-primary" type="button" id="id_search_button" onclick="search()">
+                            <button class="btn btn-primary" type="button" id="id-search-button" onclick="search()">
                                 Поиск
                             </button>
                         </div>
@@ -53,17 +53,21 @@
                                 <p class="card-text">Дата записи: {{ record.record_timestamp }}</p>
                                 <p class="card-text">Объем видео: {{ record.record_size }}</p>
                                 <p class="card-text">Длительность видео: {{ record.record_duration }}</p>
+                                {% if is_able_download %}
                                 <a href="{% url 'record_download' record.id %}" class="btn btn-primary">Скачать</a>
+                                {% endif %}
+                                {% if is_able_edit %}
                                 <button class="btn btn-primary" id="id-record-edit-{{ record.id }}"
                                         data-bs-toggle="modal" data-bs-target="#id-edit-modal-{{ record.id }}">Изменить
                                     имя
                                 </button>
+                                {% endif %}
                                 <div class="modal fade" id="id-edit-modal-{{ record.id }}" tabindex="-1"
-                                     aria-labelledby="editModalLabel{{ record.id }}" aria-hidden="true">
+                                     aria-labelledby="id-edit-modal-label-{{ record.id }" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editModalLabel{{ record.id }}">Введите новое
+                                                <h5 class="modal-title" id="id-edit-modal-label-{{ record.id }">Введите новое
                                                     имя записи.</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
@@ -88,15 +92,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% if is_able_delete %}
                                 <button type="button" class="btn btn-danger" id="id-record-delete-{{ record.id }}"
                                         data-bs-toggle="modal" data-bs-target="#id-delete-modal-{{ record.id }}">Удалить
                                 </button>
+                                {% endif %}
                                 <div class="modal fade" id="id-delete-modal-{{ record.id }}" tabindex="-1"
-                                     aria-labelledby="deleteModalLabel{{ record.id }}" aria-hidden="true">
+                                     aria-labelledby="id-delete-modal-label-{{ record.id }}" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteModalLabel{{ record.id }}">Вы уверены,
+                                                <h5 class="modal-title" id="id-delete-modal-label-{{ record.id }}">Вы уверены,
                                                     что хотите удалить эту запись?</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
@@ -137,7 +143,7 @@
                         <div class="input-group mb-3 mr-3">
                             <input type="text" class="form-control" placeholder="Введите имя" id="id-search-text"
                                    value="{{ search }}">
-                            <button class="btn btn-primary" type="button" id="id_search_button" onclick="search()">
+                            <button class="btn btn-primary" type="button" id="id-search-button" onclick="search()">
                                 Поиск
                             </button>
                         </div>

@@ -1,5 +1,16 @@
 from django.db import models
 
+from utils.rbac_scripts import is_user_able
+
+
+class CameraManager(models.Manager):
+    def for_user(self, user, action=None):
+        if action is None:
+            return self.get_queryset()
+        if is_user_able(user, 'C', action):
+            return self.get_queryset()
+        return Camera.objects.none()
+
 
 class Camera(models.Model):
     name = models.CharField(verbose_name='Имя камеры', max_length=50, unique=True, null=False, blank=False)
@@ -10,6 +21,8 @@ class Camera(models.Model):
                                                       blank=False)
     video_length_min = models.PositiveIntegerField(verbose_name='Длительность видео, мин', default=1, null=False,
                                                    blank=False)
+
+    objects = CameraManager()
 
     class Meta:
         ordering = 'name',
