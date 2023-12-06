@@ -98,7 +98,10 @@ class StaffEditForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['groups'].initial = models.User.objects.get(id=self.instance.pk).groups.first().id
+        try:
+            self.fields['groups'].initial = models.User.objects.get(id=self.instance.pk).groups.first().id
+        except AttributeError as e:
+            self.fields['groups'].initial = 3
 
     def save(self, commit=True):
         instance = super().save(commit=False)

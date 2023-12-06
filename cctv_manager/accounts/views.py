@@ -42,6 +42,11 @@ class StaffAddView(CreateView):
     template_name = 'accounts/create.html'
     form_class = forms.StaffAddForm
 
+    def get(self, request, *args, **kwargs):
+        if is_user_able(request.user, 'U', 'A'):
+            return super().get(args, kwargs)
+        return HttpResponseRedirect(reverse_lazy('staff_list'))
+
     def get_success_url(self):
         return reverse_lazy('staff_list')
 
@@ -50,6 +55,11 @@ class StaffEditView(UpdateView):
     model = models.User
     template_name = 'accounts/edit.html'
     form_class = forms.StaffEditForm
+
+    def get(self, request, *args, **kwargs):
+        if is_user_able(request.user, 'U', 'C'):
+            return super().get(args, kwargs)
+        return HttpResponseRedirect(reverse_lazy('staff_list'))
 
     def get_success_url(self):
         return reverse_lazy('staff_list')
@@ -64,6 +74,11 @@ class StaffChangePasswordView(UpdateView):
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
+
+    def get(self, request, *args, **kwargs):
+        if request.user.id == kwargs.get('pk'):
+            return super().get(args, kwargs)
+        return HttpResponseRedirect(reverse_lazy('staff_list'))
 
     def get_success_url(self):
         return reverse_lazy('staff_list')
