@@ -1,31 +1,32 @@
 {% if is_able_delete and record.id != user.id %}
-<div class="d-flex justify-content-between">
-    <button type="button" class="btn btn-sm btn-danger mr-2" id="id-staff-delete-{{ record.id }}" data-bs-toggle="modal"
-            data-bs-target="#id-delete-modal-{{ record.id }}">Удалить
-    </button>
-</div>
-<div class="modal fade" id="id-delete-modal-{{ record.id }}" tabindex="-1"
-     aria-labelledby="id-delete-modal-label-{{ record.id }}"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="id-delete-modal-label-{{ record.id }}">Вы уверены, что хотите удалить этого
-                    сотрудника?</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Это действие невозможно отменить.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                <a href="{% url 'staff_delete' record.id %}" class="btn btn-danger">Удалить</a>
+    <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-sm btn-danger mr-2" id="id-staff-delete-{{ record.id }}"
+                data-bs-toggle="modal"
+                data-bs-target="#id-delete-modal-{{ record.id }}">Удалить
+        </button>
+    </div>
+    <div class="modal fade" id="id-delete-modal-{{ record.id }}" tabindex="-1"
+         aria-labelledby="id-delete-modal-label-{{ record.id }}"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="id-delete-modal-label-{{ record.id }}">Вы уверены, что хотите удалить
+                        этого сотрудника?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Это действие невозможно отменить.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <a href="{% url 'staff_delete' record.id %}" class="btn btn-danger">Удалить</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 {% else %}
-<div class="d-flex justify-content-between">
-    <button class="btn btn-sm btn-danger mr-2" disabled>Удалить</button>
-</div>
+    <div class="d-flex justify-content-between">
+        <button class="btn btn-sm btn-danger mr-2" disabled>Удалить</button>
+    </div>
 {% endif %}
