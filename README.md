@@ -2,7 +2,7 @@
 
 ## Серверная часть
 
-В данном репозитории приведен код сервреной части разрабатываемого ПО. Она отвечает за:
+В данном репозитории приведен код серверной части разрабатываемого ПО. Она отвечает за:
 
 * Прием видеопотока и его анализ
 * Сохранение контента
@@ -47,6 +47,7 @@ touch .env
 echo APP_KEY='secret-key' > .env
 cd cctv_manager
 python manage.py migrate
+python manage.py loaddata fixtures/groups.json
 python manage.py loaddata fixtures/users.json
 ```
 
