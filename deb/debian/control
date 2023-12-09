@@ -1,0 +1,18 @@
+Source: cctv-manager
+Version: 1.0.0
+Section: devel
+Priority: optional
+Architecture: all
+Depends: python3 (=3.9)
+Maintainer: Makretskii Peter <p.makretskii@gmail.com>
+Standards-Version: 1.0.0
+Description: ATM CCTV administrative web-console.
+ .
+
+Package: cctv-manager
+Architecture: all
+Depends: python3 (=3.9)
+Version: 1.0.0
+Description: ATM CCTV administrative web-console.
+ .
+

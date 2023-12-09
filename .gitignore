@@ -6,3 +6,11 @@ __pycache__/
 *.env
 *.sqlite3
 *.jpg
+
+*.deb
+*.changes
+*.buildinfo
+*.substvars
+*.debhelper.log
+*.debhelper
+

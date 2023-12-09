@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+
+
+%:
+	dh $@ --with systemd
+
+override_dh_auto_install:
+	dh_install opt/cctv-manager/accounts/* opt/cctv-manager/accounts/
+	dh_install opt/cctv-manager/cameras/* opt/cctv-manager/cameras/
+	dh_install opt/cctv-manager/cctv_manager/* opt/cctv-manager/cctv_manager/
+	dh_install opt/cctv-manager/design/* opt/cctv-manager/design/
+	dh_install opt/cctv-manager/fixtures/* opt/cctv-manager/fixtures/
+	dh_install opt/cctv-manager/utils/* opt/cctv-manager/utils/
+	dh_auto_install
+
