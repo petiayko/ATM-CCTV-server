@@ -12,12 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 import platform
-from dotenv import load_dotenv
 from pathlib import Path
-
-dotenv_path = os.path.join(os.path.dirname(__file__), '../..', '.env')
-if os.path.exists(dotenv_path):
-    load_dotenv(dotenv_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +22,8 @@ LOG_DIR = '/var/log/cctv-manager/'
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['APP_KEY']
+with open('/data/config/cctv_manager/secret_key', 'r') as secret_file:
+    SECRET_KEY = secret_file.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('IS_DOCKER_COMPOSE') is None:

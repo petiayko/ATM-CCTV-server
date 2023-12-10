@@ -1,0 +1,31 @@
+#!/bin/sh -e
+
+case "$1" in
+  configure)
+    # apt-get install python3-opencv
+    # apt-get install python3-pip
+
+    # pip3 install django-bootstrap-v5==1.0.11
+    
+    mkdir -p /data/config/cctv_manager/
+    
+    python3 /opt/cctv-manager/utils/secret_generator.py
+    python3 /opt/cctv-manager/manage.py migrate
+    python3 /opt/cctv-manager/manage.py loaddata /opt/cctv-manager/fixtures/groups.json
+    python3 /opt/cctv-manager/manage.py loaddata /opt/cctv-manager/fixtures/users.json
+  ;;
+
+
+  abort-upgrade|abort-remove|abort-deconfigure)
+    exit 0
+  ;;
+
+  *)
+    echo "postinst called with unknown argument \`$1'" >&2
+    exit 1
+  ;;
+
+esac
+
+exit 0
+

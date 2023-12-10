@@ -13,4 +13,5 @@ __pycache__/
 *.substvars
 *.debhelper.log
 *.debhelper
+deb/debian/files
 
