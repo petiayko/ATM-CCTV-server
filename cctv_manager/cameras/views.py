@@ -1,4 +1,5 @@
 import threading
+import cv2
 
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.http import StreamingHttpResponse
