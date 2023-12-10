@@ -19,7 +19,7 @@ jobs:
         run: |
           sudo mkdir -p /data/config/cctv_manager
           cd cctv_manager
-          python utils/secret_generator.py
+          sudo python utils/secret_generator.py
           python manage.py test
       - name: Make deb package
         run: |
