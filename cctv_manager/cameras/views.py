@@ -132,8 +132,7 @@ def get_all_ips():
 @gzip.gzip_page
 def show_camera_stream(request, pk):
     try:
-        cam = VideoCamera(get_camera_ip(pk))
-        return StreamingHttpResponse(gen(cam), content_type="multipart/x-mixed-replace;boundary=frame")
+        return StreamingHttpResponse(gen(VideoCamera(get_camera_ip(pk))), content_type="multipart/x-mixed-replace;boundary=frame")
     except:
         pass
     # надо отобразить страничку где стрим с камеры
