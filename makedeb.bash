@@ -2,8 +2,8 @@
 
 rm -f *.deb
 
-rm -r deb/opt/
-rm -r deb/debian/cctv-manager/
+rm -rf deb/opt/
+rm -rf deb/debian/cctv-manager/
 
 mkdir -p deb/opt/cctv-manager/accounts/
 rm -r deb/opt/cctv-manager/accounts/*
@@ -39,5 +39,5 @@ cd deb || exit
 dpkg-buildpackage  -us -uc -b
 cd - || exit
 
-rm -r deb/opt/
-rm -r deb/debian/cctv-manager/
+rm -rf deb/opt/
+rm -rf deb/debian/cctv-manager/
