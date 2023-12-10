@@ -1,6 +1,7 @@
 import threading
 
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.http import StreamingHttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView
