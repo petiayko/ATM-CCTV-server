@@ -1,13 +1,15 @@
+import threading
+
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView
 from django_tables2 import SingleTableView
-
+from django.views.decorators import gzip
 from . import forms, models, tables
 from utils.network_scripts import check_ping
 from utils.rbac_scripts import is_user_able
-
+import threading
 
 class CameraViewFilterMixin:
     def get_queryset(self):
@@ -91,3 +93,49 @@ def ping_camera(request, pk):
         return JsonResponse({'success': False})
     except Exception as e:
         return JsonResponse({'success': False}, status=500)
+
+class VideoCamera(object):
+    def __init__(self, camera_ip):
+        self.video = cv2.VideoCapture(camera_ip)
+        (self.grabbed, self.frame) = self.video.read()
+        threading.Thread(target=self.update, args=()).start()
+
+    def __del__(self):
+        self.video.release()
+
+    def get_frame(self):
+        image = self.frame
+        _, jpeg = cv2.imencode('.jpg', image)
+        return jpeg.tobytes()
+    def update(self):
+        while True:
+            (self.grabbed, self.frame) = self.video.read()
+
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+
+# надо реализовать функцию получения ip камеры по ее номеру
+def get_camera_ip(cam_num):
+    return "rtsp:\\abrakadabra"+cam_num
+
+# надо реализовать функцию получения всех ip
+def get_all_ips():
+    ip = ["rtsp:\\first", "rtsp:\\second"]
+    return ip
+
+
+# надо добавить куда рендериться будет(либо будет на отдельной страничке как сейчас)
+@gzip.gzip_page
+def show_camera_stream(request, pk):
+    try:
+        cam = VideoCamera(get_camera_ip(pk))
+        return StreamingHttpResponse(gen(cam), content_type="multipart/x-mixed-replace;boundary=frame")
+    except:
+        pass
+    # надо отобразить страничку где стрим с камеры
+    return render(request, "cameras/detail.html")
+
