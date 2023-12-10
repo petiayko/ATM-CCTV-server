@@ -25,4 +25,3 @@ jobs:
         run: |
           ./makedeb.bash
           ls *.deb -l
-

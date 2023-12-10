@@ -35,10 +35,9 @@ cp -r cctv_manager/records/* deb/opt/cctv-manager/records/
 cp -r cctv_manager/utils/* deb/opt/cctv-manager/utils/
 cp cctv_manager/manage.py deb/opt/cctv-manager/
 
-cd deb
+cd deb || exit
 dpkg-buildpackage  -us -uc -b
-cd -
+cd - || exit
 
 rm -r deb/opt/
 rm -r deb/debian/cctv-manager/
-
