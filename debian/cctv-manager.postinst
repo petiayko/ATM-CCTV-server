@@ -1,0 +1,26 @@
+#!/bin/sh -e
+
+case "$1" in
+  configure)
+    mkdir -p /etc/cctv_manager/
+    python3 -m pip install --break-system-packages django-bootstrap-v5 pythonping
+    
+    python3 -m cctv_manager.utils.secret_generator
+    python3 -m cctv_manager.manage migrate
+    #python3 -m cctv_manager.manage loaddata /etc/cctv-manager/fixtures/groups.json
+    #python3 -m cctv_manager.manage loaddata /etc/cctv-manager/fixtures/users.json
+  ;;
+
+
+  abort-upgrade|abort-remove|abort-deconfigure)
+    exit 0
+  ;;
+
+  *)
+    echo "postinst called with unknown argument \`$1'" >&2
+    exit 1
+  ;;
+
+esac
+
+exit 0

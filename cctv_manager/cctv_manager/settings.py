@@ -22,7 +22,7 @@ LOG_DIR = '/var/log/cctv-manager/'
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open('/data/config/cctv_manager/secret_key', 'r') as secret_file:
+with open('/etc/cctv_manager/secret_key', 'r') as secret_file:
     SECRET_KEY = secret_file.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -44,10 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap5',
     'django_tables2',
-    'accounts.apps.AccountsConfig',
-    'cameras.apps.CamerasConfig',
-    'design.apps.DesignConfig',
-    'records.apps.RecordsConfig',
+    'cctv_manager.accounts.apps.AccountsConfig',
+    'cctv_manager.cameras.apps.CamerasConfig',
+    'cctv_manager.design.apps.DesignConfig',
+    'cctv_manager.records.apps.RecordsConfig',
 ]
 
 MIDDLEWARE = [
@@ -58,13 +58,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'cctv_manager.middlewares.AuthRequiredMiddleware',
+    'cctv_manager.cctv_manager.middlewares.AuthRequiredMiddleware',
 ]
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 60 * 60
 
-ROOT_URLCONF = 'cctv_manager.urls'
+ROOT_URLCONF = 'cctv_manager.cctv_manager.urls'
 
 TEMPLATES = [
     {

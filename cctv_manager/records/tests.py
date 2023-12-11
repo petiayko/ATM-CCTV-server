@@ -3,7 +3,7 @@ import os
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model, models
 
-from .models import Record
+from cctv_manager.models import Record
 
 User = get_user_model()
 

@@ -1,6 +1,6 @@
 [
   {
-    "model": "auth.user",
+    "model": "cctv_manager.auth.user",
     "pk": 1,
     "fields": {
       "password": "pbkdf2_sha256$600000$NN6yAiLqfDo2kn9qbFiT07$YO+LZhUns6dB7FhxQhPrbvWOKu4yxLiEwcOE72d0q1Y=",
