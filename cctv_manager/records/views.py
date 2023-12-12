@@ -6,9 +6,9 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 
-from . import models
-from cameras.models import Camera
-from utils.rbac_scripts import is_user_able
+from cctv_manager.records import models
+from cctv_manager.cameras.models import Camera
+from cctv_manager.utils.rbac_scripts import is_user_able
 
 
 class RecordViewFilterMixin:

@@ -5,20 +5,31 @@ on: [ push ]
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: python:bookworm
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.9
-      - name: Fill env-file
-        run: |
-          echo APP_KEY="${{ secrets.APP_KEY }}" >> .env
       - name: Install Dependencies
         run: |
-          python -m pip install --upgrade pip
+          python3 -m pip install --upgrade pip
           pip install -r requirements.txt
+          apt update -y
+          apt install -y python3-opencv
       - name: Run Tests
         run: |
-          cd cctv_manager
-          python manage.py test
+          mkdir -p /etc/cctv_manager
+          python3 -m cctv_manager.utils.secret_generator
+          python3 -m cctv_manager.manage test
+      - name: Prepare to build package
+        run: |
+          apt install -y build-essential debhelper devscripts dh-python python3-all python3-setuptools python3-django pybuild-plugin-pyproject python3-opencv
+      - name: Make deb package
+        run: |
+          debuild -us -uc
+          mv ../*.deb ./
+      - name: Publish artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: cctv-manager_latest.deb
+          path: |
+            *.deb

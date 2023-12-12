@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from cctv_manager.cameras import views
 
 urlpatterns = [
     path('', views.CamerasListView.as_view(), name='cameras_list'),

@@ -3,34 +3,34 @@
 {% block page_title %}CCTV manager | Камеры{% endblock %}
 
 {% block add_button %}
-{% if is_able_add %}
-    <div class="mb-3 mr-3 d-flex">
-        <a href="{% url 'camera_add' %}" class="btn btn-primary">Добавить камеру</a>
-    </div>
-{% endif %}
+    {% if is_able_add %}
+        <div class="mb-3 mr-3 d-flex">
+            <a href="{% url 'camera_add' %}" class="btn btn-primary">Добавить камеру</a>
+        </div>
+    {% endif %}
 {% endblock %}
 {% block empty_mess %}<h2>В системе нет зарегистрированных камер.</h2>{% endblock %}
 {% block additional_js %}
-<script>
-    $(function() {
-        $('tbody tr').each(function() {
-            let camera_id = $(this).attr('camera-id')
-            $.ajax({
-                url: '/cameras/' + camera_id + '/ping',
-                method: 'get',
-                success: function(data) {
-                    if (data.success) {
-                        $('#id-status-' + camera_id).parent().html('<strong style="color: green">Доступна</strong>')
-                    } else {
-                        $('#id-status-' + camera_id).parent().html('<strong style="color: red">Недоступна</strong>')
+    <script>
+        $(function () {
+            $('tbody tr').each(function () {
+                let camera_id = $(this).attr('camera-id')
+                $.ajax({
+                    url: '/cameras/' + camera_id + '/ping',
+                    method: 'get',
+                    success: function (data) {
+                        if (data.success) {
+                            $('#id-status-' + camera_id).parent().html('<strong style="color: green">Доступна</strong>')
+                        } else {
+                            $('#id-status-' + camera_id).parent().html('<strong style="color: red">Недоступна</strong>')
+                        }
+                    },
+                    error: function (data) {
+                        $('#id-status-' + camera_id).parent().html(
+                            '<strong style="color: red">Не удалось определить</strong>')
                     }
-                },
-                error: function(data) {
-                    $('#id-status-' + camera_id).parent().html(
-                      '<strong style="color: red">Не удалось определить</strong>')
-                }
+                })
             })
         })
-    })
-</script>
+    </script>
 {% endblock %}

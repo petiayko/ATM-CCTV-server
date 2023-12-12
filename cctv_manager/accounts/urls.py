@@ -1,7 +1,7 @@
 from django.contrib.auth.views import LoginView
 from django.urls import path, include
 
-from . import views
+from cctv_manager.accounts import views
 
 urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),

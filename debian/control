@@ -1,0 +1,17 @@
+Source: cctv-manager
+Section: devel
+Priority: optional
+#Architecture: all
+Build-Depends: debhelper (>=12), dh-python, python3-all, python3-setuptools, python3-django, pybuild-plugin-pyproject
+Maintainer: Makretskii Peter <p.makretskii@gmail.com>
+Standards-Version: 1.0.0
+Homepage: https://github.com/petiayko/ATM-CCTV-server
+#Description: ATM CCTV administrative web-console.
+
+
+Package: cctv-manager
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}, python3-pip, python3-opencv
+X-Python3-Version: >=3.9
+Description: ATM CCTV administrative web-console.
+ .

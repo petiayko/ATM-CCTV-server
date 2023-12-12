@@ -1,6 +1,6 @@
 [
   {
-    "model": "auth.group",
+    "model": "cctv_manager.auth.group",
     "pk": 1,
     "fields": {
       "name": "NA",
@@ -8,7 +8,7 @@
     }
   },
   {
-    "model": "auth.group",
+    "model": "cctv_manager.auth.group",
     "pk": 2,
     "fields": {
       "name": "LA",
@@ -16,7 +16,7 @@
     }
   },
     {
-    "model": "auth.group",
+    "model": "cctv_manager.auth.group",
     "pk": 3,
     "fields": {
       "name": "O",

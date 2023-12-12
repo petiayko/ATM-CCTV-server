@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model, models
 
-from .models import Camera
+from cctv_manager.models import Camera
 
 User = get_user_model()
 

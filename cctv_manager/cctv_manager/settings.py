@@ -12,12 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 import platform
-from dotenv import load_dotenv
 from pathlib import Path
-
-dotenv_path = os.path.join(os.path.dirname(__file__), '../..', '.env')
-if os.path.exists(dotenv_path):
-    load_dotenv(dotenv_path)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +22,8 @@ LOG_DIR = '/var/log/cctv-manager/'
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['APP_KEY']
+with open('/etc/cctv_manager/secret_key', 'r') as secret_file:
+    SECRET_KEY = secret_file.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 if os.environ.get('IS_DOCKER_COMPOSE') is None:
@@ -48,10 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap5',
     'django_tables2',
-    'accounts.apps.AccountsConfig',
-    'cameras.apps.CamerasConfig',
-    'design.apps.DesignConfig',
-    'records.apps.RecordsConfig',
+    'cctv_manager.accounts.apps.AccountsConfig',
+    'cctv_manager.cameras.apps.CamerasConfig',
+    'cctv_manager.design.apps.DesignConfig',
+    'cctv_manager.records.apps.RecordsConfig',
 ]
 
 MIDDLEWARE = [
@@ -62,13 +58,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'cctv_manager.middlewares.AuthRequiredMiddleware',
+    'cctv_manager.cctv_manager.middlewares.AuthRequiredMiddleware',
 ]
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 60 * 60
 
-ROOT_URLCONF = 'cctv_manager.urls'
+ROOT_URLCONF = 'cctv_manager.cctv_manager.urls'
 
 TEMPLATES = [
     {

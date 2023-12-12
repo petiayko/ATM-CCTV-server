@@ -1,8 +1,8 @@
 import django_tables2 as tables
 from django.utils.html import format_html
 
-from . import models
-from design.tables import TableStyleMeta
+from cctv_manager.cameras import models
+from cctv_manager.design.tables import TableStyleMeta
 
 
 class CamerasTable(tables.Table):
