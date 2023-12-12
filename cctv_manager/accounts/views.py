@@ -5,8 +5,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
 from django_tables2 import SingleTableView
 
-from . import tables, forms
-from utils.rbac_scripts import is_user_able
+from cctv_manager.accounts import tables, forms
+from cctv_manager.utils.rbac_scripts import is_user_able
 
 
 def information(request):

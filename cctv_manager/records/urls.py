@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from cctv_manager.records import views
 
 urlpatterns = [
     path('', views.LiveStreamView.as_view(), name='live_stream'),

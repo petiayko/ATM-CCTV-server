@@ -4,9 +4,9 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView
 from django_tables2 import SingleTableView
 
-from . import forms, models, tables
-from utils.network_scripts import check_ping
-from utils.rbac_scripts import is_user_able
+from cctv_manager.cameras import forms, models, tables
+from cctv_manager.utils.network_scripts import check_ping
+from cctv_manager.utils.rbac_scripts import is_user_able
 
 
 class CameraViewFilterMixin:

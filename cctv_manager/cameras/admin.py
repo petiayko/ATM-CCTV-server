@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .models import Camera
+from cctv_manager.cameras.models import Camera
 
 admin.site.register(Camera)

@@ -10,6 +10,6 @@ secret_key_symbols = ''.join([string.ascii_letters,
 
 secret_key = ''.join([random.choice(secret_key_symbols) for _ in range(50)])
 
-with open('/data/config/cctv_manager/secret_key', 'w+') as secret_file:
+with open('/etc/cctv_manager/secret_key', 'w+') as secret_file:
     secret_file.write(secret_key)
 

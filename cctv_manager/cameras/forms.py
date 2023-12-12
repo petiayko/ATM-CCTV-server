@@ -1,6 +1,6 @@
 from django import forms
 
-from . import models
+from cctv_manager.cameras import models
 
 
 class CameraAddForm(forms.ModelForm):
@@ -26,7 +26,7 @@ class CameraAddForm(forms.ModelForm):
         label='Время предзаписи, сек',
         help_text='Длительность сохраняемого фрагмента до начала активности в кадре',
         min_value=0,
-        step_size=1,
+        #step_size=1,
         initial=5,
         widget=forms.NumberInput(attrs={
             'placeholder': ''
@@ -37,7 +37,7 @@ class CameraAddForm(forms.ModelForm):
         label='Время постзаписи, сек',
         help_text='Длительность сохраняемого фрагмента после окончания активности в кадре',
         min_value=0,
-        step_size=1,
+        #step_size=1,
         initial=0,
         widget=forms.NumberInput(attrs={
             'placeholder': ''
@@ -48,7 +48,7 @@ class CameraAddForm(forms.ModelForm):
         label='Время предзаписи, мин',
         help_text='Максимальная длительность сохраняемого видео',
         min_value=1,
-        step_size=1,
+        #step_size=1,
         initial=1,
         widget=forms.NumberInput(attrs={
             'placeholder': ''

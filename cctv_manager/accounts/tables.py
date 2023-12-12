@@ -2,7 +2,7 @@ import django_tables2 as tables
 from django.contrib.auth import models
 from django.utils.html import format_html
 
-from design.tables import TableStyleMeta
+from cctv_manager.design.tables import TableStyleMeta
 
 
 class StaffTable(tables.Table):

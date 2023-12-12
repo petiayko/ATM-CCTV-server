@@ -3,7 +3,7 @@ import datetime
 import os
 from django.db import models
 
-from utils.rbac_scripts import is_user_able
+from cctv_manager.utils.rbac_scripts import is_user_able
 
 
 class RecordManager(models.Manager):
