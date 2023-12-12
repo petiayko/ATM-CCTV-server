@@ -10,5 +10,5 @@ urlpatterns = [
     path('<int:pk>/delete', views.camera_delete, name='camera_delete'),
     path('<int:pk>/ping', views.ping_camera, name='camera_ping'),
     path('<int:pk>/stream', views.show_camera_stream, name='camera_stream')
-    # path('all/stream', views.show_camera_stream ,name='all_streams')
+    # path('all/stream', views.show_camera_stream, name='all_streams')
 ]

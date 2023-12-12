@@ -91,7 +91,7 @@
 
     function set_video(camera_id) {
         {% if is_able_add %} $('#id-camera-name-' + camera_id).siblings().first().after('<button class="btn btn-primary mt-3" style="display: flex;">Начать запись</button>') {% endif %}
-        $('#id-camera-name-' + camera_id).siblings().first().after('<img src="{% static 'images/temp.jpg' %}">')
+        $('#id-camera-name-' + camera_id).siblings().first().after('<img src="cameras/' + camera_id.toString() + '/stream">')
         $('#id-camera-name-' + camera_id).siblings().first().remove()
     }
 </script>
