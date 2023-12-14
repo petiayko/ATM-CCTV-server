@@ -47,7 +47,7 @@ class CameraDetailView(CameraViewFilterMixin, DetailView):
             'fields': camera.get_fields().items(),
             'is_able_edit': is_user_able(self.request.user, 'C', 'E'),
             'is_able_delete': is_user_able(self.request.user, 'C', 'D'),
-            'is_able_reload': is_user_able(self.request.user, 'C', 'A'),
+            'is_able_action': is_user_able(self.request.user, 'C', 'A'),
         })
         return context
 
