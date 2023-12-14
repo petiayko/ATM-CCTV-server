@@ -23,10 +23,10 @@ class StaffTable(tables.Table):
         for group in record.groups.all().values_list('name', flat=True):
             if group == 'O':
                 output.append('Оператор')
-            elif group == 'LA':
-                output.append('Локальный администратор')
-            elif group == 'NA':
-                output.append('Сетевой администратор')
+            elif group == 'S':
+                output.append('Сервисная служба')
+            elif group == 'A':
+                output.append('Администратор')
         return ', '.join(output).capitalize()
 
     class Meta(TableStyleMeta):

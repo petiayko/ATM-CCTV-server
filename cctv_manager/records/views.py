@@ -25,7 +25,7 @@ class LiveStreamView(RecordViewFilterMixin, TemplateView):
         context['cameras'] = [cameras[i:i + 2] for i in range(0, len(cameras), 2)]
         if len(cameras) and len(context['cameras'][-1]) == 1:
             context['cameras'][-1].append(None)
-        context['is_able_add'] = is_user_able(self.request.user, 'R', 'A')
+        context['is_able_add'] = is_user_able(self.request.user, 'R', 'C')
         return context
 
 
@@ -35,9 +35,9 @@ class RecordsListView(RecordViewFilterMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'is_able_edit': is_user_able(self.request.user, 'R', 'C'),
+            'is_able_edit': is_user_able(self.request.user, 'R', 'E'),
             'is_able_delete': is_user_able(self.request.user, 'R', 'D'),
-            'is_able_download': is_user_able(self.request.user, 'R', 'L'),
+            'is_able_download': is_user_able(self.request.user, 'R', 'A'),
         })
         if 'search' in self.request.GET:
             template = self.request.GET['search']
@@ -67,7 +67,7 @@ class RecordsListView(RecordViewFilterMixin, TemplateView):
 
 
 def record_edit(request, pk):
-    if not is_user_able(request.user, 'R', 'C'):
+    if not is_user_able(request.user, 'R', 'E'):
         return HttpResponse(status=404)
     if request.method == 'GET':
         return HttpResponse(status=405)
@@ -86,7 +86,7 @@ def record_delete(request, pk):
 
 
 def record_download(request, pk):
-    if not is_user_able(request.user, 'R', 'L'):
+    if not is_user_able(request.user, 'R', 'A'):
         return HttpResponse(status=404)
     record = get_object_or_404(models.Record, pk=pk)
     if os.path.exists(record.location):

@@ -27,7 +27,7 @@ class CamerasListView(CameraViewFilterMixin, SingleTableView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'is_able_add': is_user_able(self.request.user, 'C', 'A'),
+            'is_able_add': is_user_able(self.request.user, 'C', 'C'),
         })
         return context
 
@@ -45,9 +45,9 @@ class CameraDetailView(CameraViewFilterMixin, DetailView):
         camera = self.object
         context.update({
             'fields': camera.get_fields().items(),
-            'is_able_edit': is_user_able(self.request.user, 'C', 'C'),
+            'is_able_edit': is_user_able(self.request.user, 'C', 'E'),
             'is_able_delete': is_user_able(self.request.user, 'C', 'D'),
-            'is_able_reload': is_user_able(self.request.user, 'C', 'R'),
+            'is_able_reload': is_user_able(self.request.user, 'C', 'A'),
         })
         return context
 
@@ -58,7 +58,7 @@ class CameraAddView(CreateView):
     form_class = forms.CameraAddForm
 
     def get(self, request, *args, **kwargs):
-        if is_user_able(request.user, 'C', 'A'):
+        if is_user_able(request.user, 'C', 'C'):
             return super().get(args, kwargs)
         return HttpResponseRedirect(reverse_lazy('cameras_list'))
 

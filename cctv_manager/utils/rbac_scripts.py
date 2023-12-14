@@ -13,5 +13,5 @@ def is_user_able(user, obj, action):
         raise RuntimeError(f'Object {obj} is unknown for this role: {role}')
     is_able = actions.get(action)
     if is_able is None:
-        raise RuntimeError(f'Action {obj} is unknown for this role: {role} and action: {action}')
+        raise RuntimeError(f'Object {obj} is unknown for this role: {role}, and action: {action}')
     return is_able == 1
