@@ -144,34 +144,38 @@ LOGOUT_REDIRECT_URL = 'login'
 OPEN_URLS = ['logout']
 
 """
-    NA  - Network Administrator
-    LA  - Local Administrator
+    A   - Administrator
+    S   - Service
     O   - Operator
-    
+
     C   - Camera
     R   - Record
     U   - User
-    
-    A   - Add
-    C   - Change
+
+    C   - Create
+    E   - Edit
     D   - Delete
-    R   - Reload
-    L   - Download
+    S   - See
+    A   - Action (download for record, reload for camera)
+
+    1   - allowed
+    0   - forbidden
+    x   - undefined
 """
 ACCESS_MATRIX = {
-    'NA': {
-        'C': {'A': 1, 'C': 1, 'D': 1, 'R': 1},
-        'R': {'A': 1, 'C': 1, 'D': 1, 'L': 1},
-        'U': {'A': 1, 'C': 1, 'D': 1}
+    'A': {
+        'C': {'C': 1, 'E': 1, 'D': 1, 'S': 1, 'A': 1},
+        'R': {'C': 1, 'E': 1, 'D': 1, 'S': 1, 'A': 1},
+        'U': {'C': 1, 'E': 1, 'D': 1, 'S': 1, 'A': 0}   # A: x
     },
-    'LA': {
-        'C': {'A': 0, 'C': 1, 'D': 0, 'R': 1},
-        'R': {'A': 1, 'C': 0, 'D': 0, 'L': 1},
-        'U': {'A': 0, 'C': 0, 'D': 0}
+    'S': {
+        'C': {'C': 0, 'E': 0, 'D': 0, 'S': 1, 'A': 1},
+        'R': {'C': 0, 'E': 0, 'D': 0, 'S': 1, 'A': 0},
+        'U': {'C': 0, 'E': 0, 'D': 0, 'S': 0, 'A': 0}   # A: x
     },
     'O': {
-        'C': {'A': 0, 'C': 0, 'D': 0, 'R': 0},
-        'R': {'A': 1, 'C': 0, 'D': 0, 'L': 1},
-        'U': {'A': 0, 'C': 0, 'D': 0}
+        'C': {'C': 0, 'E': 0, 'D': 0, 'S': 0, 'A': 0},
+        'R': {'C': 1, 'E': 0, 'D': 0, 'S': 1, 'A': 1},
+        'U': {'C': 0, 'E': 0, 'D': 0, 'S': 0, 'A': 0}   # A: x
     },
 }

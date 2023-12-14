@@ -107,30 +107,30 @@ class TestUrlLocalAdministrator(TestCase):
         record.delete()
 
     def setUp(self):
-        self.local_admin = Client()
+        self.service = Client()
 
         self.user = User.objects.create_user(username='test', password='123')
-        new_group, _ = models.Group.objects.get_or_create(name='LA')
+        new_group, _ = models.Group.objects.get_or_create(name='S')
         new_group.user_set.add(self.user)
-        self.local_admin.force_login(self.user)
+        self.service.force_login(self.user)
 
     def test_access(self):
-        response = self.local_admin.get('/archive/')
+        response = self.service.get('/archive/')
         self.assertEquals(response.status_code, 200)
 
-        response = self.local_admin.get(f'/archive/{record.id}/edit')
+        response = self.service.get(f'/archive/{record.id}/edit')
         self.assertEquals(response.status_code, 404)
 
-        response = self.local_admin.post(f'/archive/{record.id}/edit')
+        response = self.service.post(f'/archive/{record.id}/edit')
         self.assertEquals(response.status_code, 404)
 
-        response = self.local_admin.get(f'/archive/{record.id}/download')
+        response = self.service.get(f'/archive/{record.id}/download')
+        self.assertEquals(response.status_code, 404)
+
+        response = self.service.get(f'/archive/{record.id}/preview')
         self.assertEquals(response.status_code, 200)
 
-        response = self.local_admin.get(f'/archive/{record.id}/preview')
-        self.assertEquals(response.status_code, 200)
-
-        response = self.local_admin.get(f'/archive/{record.id}/delete')
+        response = self.service.get(f'/archive/{record.id}/delete')
         self.assertEquals(response.status_code, 404)
 
 
@@ -150,30 +150,30 @@ class TestUrlNetworkAdministrator(TestCase):
         record.delete()
 
     def setUp(self):
-        self.network_admin = Client()
+        self.admin = Client()
 
         self.user = User.objects.create_user(username='test', password='123')
-        new_group, _ = models.Group.objects.get_or_create(name='NA')
+        new_group, _ = models.Group.objects.get_or_create(name='A')
         new_group.user_set.add(self.user)
-        self.network_admin.force_login(self.user)
+        self.admin.force_login(self.user)
 
     def test_access(self):
-        response = self.network_admin.get('/archive/')
+        response = self.admin.get('/archive/')
         self.assertEquals(response.status_code, 200)
 
-        response = self.network_admin.get(f'/archive/{record.id}/edit')
+        response = self.admin.get(f'/archive/{record.id}/edit')
         self.assertEquals(response.status_code, 405)
 
-        response = self.network_admin.post(f'/archive/{record.id}/edit')
+        response = self.admin.post(f'/archive/{record.id}/edit')
         self.assertEquals(response.status_code, 302)
         self.assertEquals(response.url, '/archive/')
 
-        response = self.network_admin.get(f'/archive/{record.id}/download')
+        response = self.admin.get(f'/archive/{record.id}/download')
         self.assertEquals(response.status_code, 200)
 
-        response = self.network_admin.get(f'/archive/{record.id}/preview')
+        response = self.admin.get(f'/archive/{record.id}/preview')
         self.assertEquals(response.status_code, 200)
 
-        response = self.network_admin.get(f'/archive/{record.id}/delete')
+        response = self.admin.get(f'/archive/{record.id}/delete')
         self.assertEquals(response.status_code, 302)
         self.assertEquals(response.url, '/archive/')

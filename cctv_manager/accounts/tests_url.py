@@ -124,42 +124,42 @@ class TestUrlLocalAdministrator(TestCase):
         user.delete()
 
     def setUp(self):
-        self.local_admin = Client()
+        self.service = Client()
 
         self.user = User.objects.create_user(username='test', password='123')
-        new_group, _ = models.Group.objects.get_or_create(name='LA')
+        new_group, _ = models.Group.objects.get_or_create(name='S')
         new_group.user_set.add(self.user)
-        self.local_admin.force_login(self.user)
+        self.service.force_login(self.user)
 
     def test_access(self):
-        response = self.local_admin.get('/accounts/login/')
+        response = self.service.get('/accounts/login/')
         self.assertEquals(response.status_code, 200)
 
-        response = self.local_admin.get('/accounts/information/')
+        response = self.service.get('/accounts/information/')
         self.assertEquals(response.status_code, 200)
 
-        response = self.local_admin.get('/accounts/staff/')
+        response = self.service.get('/accounts/staff/')
         self.assertEquals(response.status_code, 200)
 
-        response = self.local_admin.get('/accounts/staff/add')
+        response = self.service.get('/accounts/staff/add')
         self.assertEquals(response.status_code, 302)
         self.assertEquals(response.url, '/accounts/staff/')
 
-        response = self.local_admin.get(f'/accounts/staff/{user.id}/edit')
+        response = self.service.get(f'/accounts/staff/{user.id}/edit')
         self.assertEquals(response.status_code, 302)
         self.assertEquals(response.url, '/accounts/staff/')
 
-        response = self.local_admin.get(f'/accounts/staff/{user.id}/password')
+        response = self.service.get(f'/accounts/staff/{user.id}/password')
         self.assertEquals(response.status_code, 302)
         self.assertEquals(response.url, '/accounts/staff/')
 
-        response = self.local_admin.get(f'/accounts/staff/{self.user.id}/password')
+        response = self.service.get(f'/accounts/staff/{self.user.id}/password')
         self.assertEquals(response.status_code, 200)
 
-        response = self.local_admin.get(f'/accounts/staff/{user.id}/delete')
+        response = self.service.get(f'/accounts/staff/{user.id}/delete')
         self.assertEquals(response.status_code, 404)
 
-        response = self.local_admin.get('/accounts/logout/')
+        response = self.service.get('/accounts/logout/')
         self.assertEquals(response.status_code, 302)
         self.assertEquals(response.url, '/accounts/login/')
 
@@ -179,40 +179,40 @@ class TestUrlNetworkAdministrator(TestCase):
         user.delete()
 
     def setUp(self):
-        self.network_admin = Client()
+        self.admin = Client()
 
         self.user = User.objects.create_user(username='test', password='123')
-        new_group, _ = models.Group.objects.get_or_create(name='NA')
+        new_group, _ = models.Group.objects.get_or_create(name='A')
         new_group.user_set.add(self.user)
-        self.network_admin.force_login(self.user)
+        self.admin.force_login(self.user)
 
     def test_access(self):
-        response = self.network_admin.get('/accounts/login/')
+        response = self.admin.get('/accounts/login/')
         self.assertEquals(response.status_code, 200)
 
-        response = self.network_admin.get('/accounts/information/')
+        response = self.admin.get('/accounts/information/')
         self.assertEquals(response.status_code, 200)
 
-        response = self.network_admin.get('/accounts/staff/')
+        response = self.admin.get('/accounts/staff/')
         self.assertEquals(response.status_code, 200)
 
-        response = self.network_admin.get('/accounts/staff/add')
+        response = self.admin.get('/accounts/staff/add')
         self.assertEquals(response.status_code, 200)
 
-        response = self.network_admin.get(f'/accounts/staff/{user.id}/edit')
+        response = self.admin.get(f'/accounts/staff/{user.id}/edit')
         self.assertEquals(response.status_code, 200)
 
-        response = self.network_admin.get(f'/accounts/staff/{user.id}/password')
+        response = self.admin.get(f'/accounts/staff/{user.id}/password')
         self.assertEquals(response.status_code, 302)
         self.assertEquals(response.url, '/accounts/staff/')
 
-        response = self.network_admin.get(f'/accounts/staff/{self.user.id}/password')
+        response = self.admin.get(f'/accounts/staff/{self.user.id}/password')
         self.assertEquals(response.status_code, 200)
 
-        response = self.network_admin.get(f'/accounts/staff/{user.id}/delete')
+        response = self.admin.get(f'/accounts/staff/{user.id}/delete')
         self.assertEquals(response.status_code, 302)
         self.assertEquals(response.url, '/accounts/staff/')
 
-        response = self.network_admin.get('/accounts/logout/')
+        response = self.admin.get('/accounts/logout/')
         self.assertEquals(response.status_code, 302)
         self.assertEquals(response.url, '/accounts/login/')

@@ -26,9 +26,9 @@ class StaffListView(SingleTableView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'is_able_add': is_user_able(self.request.user, 'U', 'A'),
+            'is_able_add': is_user_able(self.request.user, 'U', 'C'),
             'is_able_delete': is_user_able(self.request.user, 'U', 'D'),
-            'is_able_edit': is_user_able(self.request.user, 'U', 'C'),
+            'is_able_edit': is_user_able(self.request.user, 'U', 'E'),
         })
         return context
 
@@ -43,7 +43,7 @@ class StaffAddView(CreateView):
     form_class = forms.StaffAddForm
 
     def get(self, request, *args, **kwargs):
-        if is_user_able(request.user, 'U', 'A'):
+        if is_user_able(request.user, 'U', 'C'):
             return super().get(args, kwargs)
         return HttpResponseRedirect(reverse_lazy('staff_list'))
 
@@ -57,7 +57,7 @@ class StaffEditView(UpdateView):
     form_class = forms.StaffEditForm
 
     def get(self, request, *args, **kwargs):
-        if is_user_able(request.user, 'U', 'C'):
+        if is_user_able(request.user, 'U', 'E'):
             return super().get(args, kwargs)
         return HttpResponseRedirect(reverse_lazy('staff_list'))
 

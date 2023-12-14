@@ -45,8 +45,8 @@ class StaffAddForm(forms.ModelForm):
         required=True,
         widget=forms.RadioSelect,
         choices=[
-            (1, 'Сетевой администратор'),
-            (2, 'Локальный администратор'),
+            (1, 'Администратор'),
+            (2, 'Сервисная служба'),
             (3, 'Оператор')
         ],
         initial=3,
@@ -90,8 +90,8 @@ class StaffEditForm(forms.ModelForm):
         required=True,
         widget=forms.RadioSelect,
         choices=[
-            (1, 'Сетевой администратор'),
-            (2, 'Локальный администратор'),
+            (1, 'Администратор'),
+            (2, 'Сервисная служба'),
             (3, 'Оператор')
         ],
     )
